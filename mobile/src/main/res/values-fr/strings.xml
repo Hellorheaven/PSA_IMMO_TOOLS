@@ -1,0 +1,158 @@
+<resources >
+    <!-- Application -->
+    <string name="app_name">PSA Immo Tool</string>
+
+    <!-- Menus -->
+    <string name="menu_vehicle">Véhicule</string>
+    <string name="menu_theme">Thème</string>
+    <string name="menu_language">Langue</string>
+    <string name="menu_quit">Quitter</string>
+    <string name="menu_vehicle_editor">Éditeur de véhicule</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_dark">Sombre</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_en">Anglais</string>
+
+    <!-- Marques -->
+    <string name="brand_peugeot">Peugeot</string>
+    <string name="brand_ford">Ford</string>
+    <string name="brand_mg">MG</string>
+    <string name="brand_ducati">Ducati</string>
+    <string name="brand_toyota">Toyota</string>
+
+    <!-- Modèles -->
+    <string name="model_207">207</string>
+    <string name="model_307">307</string>
+    <string name="model_mustang_mache">Mustang Mach-E</string>
+    <string name="model_mustang_series">Mustang (2000+)</string>
+    <string name="model_kuga">Kuga</string>
+    <string name="model_puma">Puma</string>
+    <string name="model_fiesta">Fiesta</string>
+    <string name="model_3">3</string>
+    <string name="model_4">4</string>
+    <string name="model_marvel_r">Marvel R</string>
+    <string name="model_848">848</string>
+    <string name="model_1098">1098</string>
+    <string name="model_1198">1198</string>
+    <string name="model_corolla">Corolla</string>
+
+    <!-- Log et statut -->
+    <string name="logs_cleared">🧹 Logs effacés</string>
+    <string name="storage_permission_required">📛 Autorisation de stockage requise pour exporter les logs</string>
+    <string name="log_saved_success">📝 Log enregistré dans : %1$s</string>
+    <string name="log_saved_error">❌ Erreur lors de l\'enregistrement du log : %1$s</string>
+
+    <!-- Rapport -->
+    <string name="report_header">🧾 Rapport de diagnostic</string>
+    <string name="report_date">Date :</string>
+    <string name="report_vehicle">Véhicule</string>
+    <string name="report_module">Module :</string>
+    <string name="report_connection">Connexion :</string>
+    <string name="report_pid_section">📊 Données PID :</string>
+    <string name="report_dtc_section">💥 Codes défauts :</string>
+    <string name="report_logs_section">📜 Logs :</string>
+    <string name="report_saved">💾 Rapport sauvegardé : %1$s</string>
+    <string name="report_error">❌ Erreur lors de la sauvegarde du rapport : %1$s</string>
+    <string name="module_unknown">Inconnu</string>
+    <string name="connection_success">Connexion réussie</string>
+    <string name="connection_failed">Connexion échouée</string>
+
+    <!-- FrameInterpreter -->
+    <string name="vin_received">🔍 VIN : %1$s</string>
+    <string name="pin_received">🔑 Code PIN : %1$s</string>
+    <string name="voltage_read">🔋 Tension batterie : %1$.1f V</string>
+    <string name="temperature_read">🌡 Température moteur : %1$d °C</string>
+    <string name="dtc_found">💥 Codes défauts : %1$s</string>
+    <string name="seed_received">🧬 Seed reçu : %1$s</string>
+    <string name="unknown_frame_response">❔ Trame reçue mais non interprétée</string>
+
+    <!-- Modules -->
+    <string name="module_obd2_usb">OBD2 (USB)</string>
+    <string name="module_obd2_bluetooth">OBD2 (Bluetooth)</string>
+    <string name="module_kline_usb">K-Line (USB)</string>
+    <string name="module_canbus">CANBUS (USB)</string>
+    <string name="module_canbus_uart">CANBUS (UART)</string>
+    <string name="module_can_demo">CANBUS (Démo)</string>
+
+    <!-- activity_main -->
+    <string name="label_module">Module :</string>
+    <string name="label_bluetooth_device">Appareil Bluetooth :</string>
+    <string name="label_input_frame">Trame personnalisée :</string>
+    <string name="button_connect">Connecter</string>
+    <string name="button_request_vin">Lire VIN</string>
+    <string name="button_request_pin">Lire Code PIN</string>
+    <string name="button_start_can_listen">Écouter CAN</string>
+    <string name="button_send_frame">Envoyer</string>
+    <string name="button_export_logs">Exporter Logs</string>
+    <string name="button_clear_logs">Effacer</string>
+    <string name="button_generate_report">Générer Rapport</string>
+    <string name="status_disconnected">Déconnecté</string>
+    <string name="status_connected">Connecté</string>
+    <string name="no_bluetooth_device">⚠️ Aucun périphérique Bluetooth sélectionné</string>
+    <string name="connected_to">🔗 Connecté à %1$s</string>
+    <string name="connection_failed_bt">❌ Connexion Bluetooth échouée</string>
+    <string name="no_module_connected">❌ Aucun module connecté</string>
+    <string name="error_sending_frame">❌ Erreur lors de l\'envoi de la trame</string>
+    <string name="start_listening_not_applicable">⚠️ Ce module ne supporte pas l\'écoute CAN</string>
+    <string name="usb_connection_failed">❌ Connexion USB échouée</string>
+    <string name="frame_sent">➡️ Trame envoyée : %1$s</string>
+    <string name="frame_received">⬅️ Trame reçue : %1$s</string>
+    <string name="frame_decoded">✅ Trame décodée : %1$s</string>
+    <string name="no_usb_found">⚠️ Aucun périphérique USB détecté</string>
+    <string name="error_usb_permission">❌ Autorisation USB refusée</string>
+    <string name="can_connected">🔌 CAN connecté</string>
+    <string name="can_disconnected">❌ CAN déconnecté</string>
+    <string name="can_listening_started">🎧 Écoute CAN démarrée</string>
+    <string name="pin_step_session">🔐 Initialisation de la session de sécurité…</string>
+    <string name="pin_step_seed_received">🧬 Seed reçu : %1$s</string>
+    <string name="pin_step_key_sent">🔑 Clé envoyée : %1$s</string>
+    <string name="pin_step_unlocked">🔓 Accès sécurisé activé</string>
+    <string name="pin_step_no_key_algo">❌ Aucun algorithme de calcul de clé disponible pour ce véhicule</string>
+    <string name="select_vehicle">Sélectionner un véhicule</string>
+    <string name="report_capabilities">Capacités :</string>
+    <string name="report_modules">Modules compatibles :</string>
+    <string name="no_key_algo_for_vehicle">Aucun algorithme de clé PIN n\'est connu pour le véhicule sélectionné</string>
+    <string name="pin_algo_present">Algorithme clé PIN : ✅ oui</string>
+    <string name="pin_algo_absent">Algorithme clé PIN : ❌ non</string>
+    <string name="report_seed_received">Dernier seed reçu : %1$s</string>
+    <string name="report_key_calculated">Clé calculée : %1$s</string>
+
+    <!-- Vehicle Editor -->
+    <string name="label_brand">Marque (ex: Peugeot)</string>
+    <string name="label_model">Modèle (ex: 207)</string>
+    <string name="label_year">Année (ex: 2008)</string>
+    <string name="label_app_key">AppKey (ex: D91C)</string>
+    <string name="btn_save_vehicle">Sauvegarder</string>
+    <string name="vehicle_saved">Véhicule %1$s %2$s %3$d enregistré avec succès</string>
+    <string name="invalid_vehicle_data">Veuillez remplir tous les champs correctement</string>
+    <string name="simulated_frame_received">Trame simulée reçue : %1$s</string>
+    <string name="hint_input_frame">Entrer une trame CAN/OBD2 personnalisée</string>
+    <string name="capabilities_label">Capacités disponibles :</string>
+    <string name="label_can">CAN</string>
+    <string name="label_obd2">OBD2</string>
+    <string name="label_kline">K-Line</string>
+    <string name="add_module_label">Ajouter un module compatible :</string>
+    <string name="btn_add_module">Ajouter module</string>
+    <string name="bluetooth_not_supported">❌ Bluetooth non pris en charge sur cet appareil</string>
+    <string name="no_paired_bt_devices">⚠️ Aucun appareil Bluetooth appairé trouvé</string>
+    <string name="unknown_device">Appareil inconnu</string>
+    <string name="bluetooth_scanning">🔍 Recherche de périphériques Bluetooth…</string>
+
+    <string name="menu_update">Mise à jour</string>
+    <string name="update_title">Mise à jour</string>
+    <string name="update_current_version">Version actuelle : %1$s</string>
+    <string name="update_check">Vérifier en ligne</string>
+    <string name="update_checking">Vérification de nouvelle version…</string>
+    <string name="update_got_version">Version distante : %1$s</string>
+    <string name="update_latest_title">À jour</string>
+    <string name="update_latest">Vous utilisez déjà la dernière version (%1$s)</string>
+    <string name="update_available_title">Mise à jour disponible</string>
+    <string name="update_available">Une nouvelle version (%1$s) est disponible. Télécharger maintenant ?</string>
+    <string name="update_download">Télécharger</string>
+    <string name="update_error_title">Erreur de mise à jour</string>
+    <string name="update_error_fetch">Impossible de récupérer la version distante</string>
+    <string name="update_downloading">Téléchargement de l’APK…</string>
+    <string name="update_parse_error_fallback">Le fichier téléchargé semble invalide. Voulez-vous ouvrir le navigateur pour le télécharger manuellement ?</string>
+    <string name="update_open_browser">Ouvrir le navigateur</string>
+
+</resources>

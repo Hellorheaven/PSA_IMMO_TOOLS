@@ -1,0 +1,49 @@
+<resources>
+
+    <string-array name="brand_list">
+        <item>@string/brand_peugeot</item>
+        <item>@string/brand_ford</item>
+        <item>@string/brand_mg</item>
+        <item>@string/brand_ducati</item>
+        <item>@string/brand_toyota</item>
+    </string-array>
+
+    <string-array name="peugeot_models">
+        <item>@string/model_207</item>
+        <item>@string/model_307</item>
+    </string-array>
+
+    <string-array name="ford_models">
+        <item>@string/model_mustang_mache</item>
+        <item>@string/model_mustang_series</item>
+        <item>@string/model_kuga</item>
+        <item>@string/model_puma</item>
+        <item>@string/model_fiesta</item>
+    </string-array>
+
+    <string-array name="mg_models">
+        <item>@string/model_3</item>
+        <item>@string/model_4</item>
+        <item>@string/model_marvel_r</item>
+    </string-array>
+
+    <string-array name="ducati_models">
+        <item>@string/model_848</item>
+        <item>@string/model_1098</item>
+        <item>@string/model_1198</item>
+    </string-array>
+
+    <string-array name="toyota_models">
+        <item>@string/model_corolla</item>
+    </string-array>
+
+    <string-array name="module_list">
+        <item>OBD2 USB</item>
+        <item>OBD2 Bluetooth</item>
+        <item>K-Line USB</item>
+        <item>CANBUS</item>
+        <item>CANBUS UART</item>
+        <item>CAN DEMO</item>
+    </string-array>
+
+</resources>

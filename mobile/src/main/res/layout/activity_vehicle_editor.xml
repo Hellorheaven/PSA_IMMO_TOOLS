@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Saisie marque / modèle / année / appKey -->
+        <EditText
+            android:id="@+id/editBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_brand" />
+
+        <EditText
+            android:id="@+id/editModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_model" />
+
+        <EditText
+            android:id="@+id/editYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/label_year" />
+
+        <EditText
+            android:id="@+id/editAppKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_app_key" />
+
+        <!-- Capacités supportées -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/capabilities_label"
+            android:paddingTop="8dp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkCan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_can" />
+
+        <CheckBox
+            android:id="@+id/checkObd2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_obd2" />
+
+        <CheckBox
+            android:id="@+id/checkKLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_kline" />
+
+        <!-- Choix des modules -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_module_label"
+            android:paddingTop="12dp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/moduleSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/addModuleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_add_module" />
+
+        <TextView
+            android:id="@+id/moduleListText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#555"
+            android:paddingTop="6dp" />
+
+        <!-- Bouton de sauvegarde -->
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_save_vehicle"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#444"
+            android:paddingTop="10dp" />
+
+    </LinearLayout>
+</ScrollView>
