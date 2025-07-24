@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     private val bluetoothDevices = mutableListOf<BluetoothDevice>()
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -75,7 +74,9 @@ class MainActivity : AppCompatActivity() {
         showVehicleSummaryPopup()
         refreshModuleSpinner()
         setupButtons()
-        updateButtonsVisibility()
+
+        // Masquer le spinner BT par défaut
+        bluetoothDeviceSpinner.visibility = View.GONE
 
         registerReceiver(bluetoothReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
 
@@ -86,23 +87,77 @@ class MainActivity : AppCompatActivity() {
         moduleSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
                 val selected = moduleSelector.selectedItem.toString()
-
-                // Scan BT si module Bluetooth choisi
+                // Démarre le scan BT si OBD2 Bluetooth
                 if (selected == getString(R.string.module_obd2_bluetooth)) {
                     bluetoothDevices.clear()
                     bluetoothAdapter?.startDiscovery()
                     Toast.makeText(this@MainActivity, getString(R.string.bluetooth_scanning), Toast.LENGTH_SHORT).show()
+                    bluetoothDeviceSpinner.visibility = View.VISIBLE
+                } else {
+                    bluetoothDeviceSpinner.visibility = View.GONE
                 }
-
-                // Met à jour la visibilité des actions selon le module/capacités
-                updateButtonsVisibility()
+                updateUiForSelectedModule(selected)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-        // Première mise à jour d'état des boutons
-        updateButtonsVisibility()
+        // Met l’UI au bon état pour le module sélectionné par défaut (s’il y en a un)
+        (moduleSelector.selectedItem?.toString())?.let { updateUiForSelectedModule(it) }
+    }
+
+    /**
+     * Montre / masque les boutons en fonction du module choisi (et de l’algo PIN disponible).
+     * Aucun changement côté layout : on ne fait que jouer sur la visibilité.
+     */
+    private fun updateUiForSelectedModule(selected: String) {
+        // Valeurs par défaut
+        var showRequestVin = true
+        var showRequestPin = false
+        var showStartCanListen = false
+        var showSendFrame = true // on le laisse disponible (tu envoies souvent des trames custom)
+        var showGenerateReport = true
+        var showExportLogs = true
+        var showClearLogs = true
+
+        // Par module
+        when (selected) {
+            getString(R.string.module_canbus),
+            getString(R.string.module_canbus_uart),
+            getString(R.string.module_can_demo) -> {
+                showRequestPin = true // modules CAN gèrent la séquence seed/key
+                showStartCanListen = true
+            }
+
+            getString(R.string.module_obd2_bluetooth),
+            getString(R.string.module_obd2_usb) -> {
+                // Ces modules ne gèrent pas la séquence seed/key PSA (dans ton code actuel)
+                showRequestPin = false
+                showStartCanListen = false
+            }
+
+            getString(R.string.module_kline_usb) -> {
+                // K-Line : VIN oui, PIN non (dans ton implémentation)
+                showRequestPin = false
+                showStartCanListen = false
+            }
+        }
+
+        // En plus : si pas d’algo PIN pour le véhicule => masquer le bouton PIN
+        val vehicle = VehicleManager.selectedVehicle
+        if (!PsaKeyCalculator.hasKeyAlgoFor(vehicle)) {
+            showRequestPin = false
+        }
+
+        requestVinButton.visibility = if (showRequestVin) View.VISIBLE else View.GONE
+        requestPinButton.visibility = if (showRequestPin) View.VISIBLE else View.GONE
+        startCanListenButton.visibility = if (showStartCanListen) View.VISIBLE else View.GONE
+
+        sendFrameButton.visibility = if (showSendFrame) View.VISIBLE else View.GONE
+        generateReportButton.visibility = if (showGenerateReport) View.VISIBLE else View.GONE
+        exportLogsButton.visibility = if (showExportLogs) View.VISIBLE else View.GONE
+        clearLogsButton.visibility = if (showClearLogs) View.VISIBLE else View.GONE
+        inputFrameText.visibility = if (showSendFrame) View.VISIBLE else View.GONE
     }
 
     private fun refreshModuleSpinner() {
@@ -131,9 +186,6 @@ class MainActivity : AppCompatActivity() {
             }
             currentModule?.connect()
             isConnected = true
-
-            // Après connexion, on réévalue ce qu'on affiche
-            updateButtonsVisibility()
         }
 
         requestVinButton.setOnClickListener { currentModule?.requestVin() }
@@ -167,37 +219,6 @@ class MainActivity : AppCompatActivity() {
         generateReportButton.setOnClickListener {
             generateDiagnosticReport()
         }
-    }
-
-    /**
-     * Montre / cache les boutons et le spinner BT selon :
-     *  - le module sélectionné
-     *  - les capacités du véhicule courant (CAN ?)
-     *  - la disponibilité d’un algo PIN (requestPin)
-     *
-     * Aucun renommage/ suppression : uniquement des setVisibility().
-     */
-    private fun updateButtonsVisibility() {
-        val selected = moduleSelector.selectedItem?.toString() ?: ""
-
-        // Visibilité du spinner Bluetooth
-        val isBtModule = selected == getString(R.string.module_obd2_bluetooth)
-        bluetoothDeviceSpinner.visibility = if (isBtModule) View.VISIBLE else View.GONE
-
-        // Capacités du véhicule
-        val (brand, model, _) = VehicleManager.selectedVehicle
-        val caps = VehicleCapabilities.getCapabilities(brand, model)
-        val supportsCan = caps?.supportsCan == true
-
-        // Bouton CAN listen : seulement si CAN supporté
-        startCanListenButton.visibility = if (supportsCan) View.VISIBLE else View.GONE
-
-        // Bouton PIN : visible uniquement si l'algo est présent pour le véhicule
-        val hasAlgo = PsaKeyCalculator.hasKeyAlgoFor(VehicleManager.selectedVehicle)
-        requestPinButton.visibility = if (hasAlgo) View.VISIBLE else View.GONE
-
-        // Les autres boutons restent visibles (ils existent pour tous les modules dans ton code actuel)
-        // requestVinButton, sendFrameButton, exportLogsButton, clearLogsButton, generateReportButton
     }
 
     private val bluetoothReceiver = object : BroadcastReceiver() {
@@ -268,7 +289,8 @@ class MainActivity : AppCompatActivity() {
             VehicleManager.setVehicle(vehicle.first, vehicle.second, vehicle.third)
             refreshModuleSpinner()
             updateVehicleInfoDisplay()
-            updateButtonsVisibility()
+            // remettre à jour l'UI des boutons selon le module actuellement sélectionné
+            (moduleSelector.selectedItem?.toString())?.let { updateUiForSelectedModule(it) }
         }
 
         val vehicules = listOf(

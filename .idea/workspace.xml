@@ -36,10 +36,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.1">
-      <change afterPath="$PROJECT_DIR$/README-EN.md" afterDir="false" />
+    <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -643,7 +641,23 @@
       <option name="project" value="LOCAL" />
       <updated>1753376914947</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="version 2.1.1">
+      <option name="closed" value="true" />
+      <created>1753379162201</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1753379162201</updated>
+    </task>
+    <task id="LOCAL-00021" summary="version 2.1.2">
+      <option name="closed" value="true" />
+      <created>1753380102987</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1753380102987</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -661,7 +675,8 @@
     <MESSAGE value="version 2.1" />
     <MESSAGE value="nettoyage du cache" />
     <MESSAGE value="version 2.1.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 2.1.1" />
+    <MESSAGE value="version 2.1.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 2.1.2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
