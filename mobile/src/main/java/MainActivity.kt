@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -80,18 +81,27 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.BLUETOOTH_CONNECT), 1)
         }
+
         moduleSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
                 val selected = moduleSelector.selectedItem.toString()
+
+                // Scan BT si module Bluetooth choisi
                 if (selected == getString(R.string.module_obd2_bluetooth)) {
                     bluetoothDevices.clear()
                     bluetoothAdapter?.startDiscovery()
                     Toast.makeText(this@MainActivity, getString(R.string.bluetooth_scanning), Toast.LENGTH_SHORT).show()
                 }
+
+                // Met à jour la visibilité des actions selon le module/capacités
+                updateButtonsVisibility()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
+
+        // Première mise à jour d'état des boutons
+        updateButtonsVisibility()
     }
 
     private fun refreshModuleSpinner() {
@@ -120,6 +130,9 @@ class MainActivity : AppCompatActivity() {
             }
             currentModule?.connect()
             isConnected = true
+
+            // Après connexion, on réévalue ce qu'on affiche
+            updateButtonsVisibility()
         }
 
         requestVinButton.setOnClickListener { currentModule?.requestVin() }
@@ -153,6 +166,37 @@ class MainActivity : AppCompatActivity() {
         generateReportButton.setOnClickListener {
             generateDiagnosticReport()
         }
+    }
+
+    /**
+     * Montre / cache les boutons et le spinner BT selon :
+     *  - le module sélectionné
+     *  - les capacités du véhicule courant (CAN ?)
+     *  - la disponibilité d’un algo PIN (requestPin)
+     *
+     * Aucun renommage/ suppression : uniquement des setVisibility().
+     */
+    private fun updateButtonsVisibility() {
+        val selected = moduleSelector.selectedItem?.toString() ?: ""
+
+        // Visibilité du spinner Bluetooth
+        val isBtModule = selected == getString(R.string.module_obd2_bluetooth)
+        bluetoothDeviceSpinner.visibility = if (isBtModule) View.VISIBLE else View.GONE
+
+        // Capacités du véhicule
+        val (brand, model, _) = VehicleManager.selectedVehicle
+        val caps = VehicleCapabilities.getCapabilities(brand, model)
+        val supportsCan = caps?.supportsCan == true
+
+        // Bouton CAN listen : seulement si CAN supporté
+        startCanListenButton.visibility = if (supportsCan) View.VISIBLE else View.GONE
+
+        // Bouton PIN : visible uniquement si l'algo est présent pour le véhicule
+        val hasAlgo = PsaKeyCalculator.hasKeyAlgoFor(VehicleManager.selectedVehicle)
+        requestPinButton.visibility = if (hasAlgo) View.VISIBLE else View.GONE
+
+        // Les autres boutons restent visibles (ils existent pour tous les modules dans ton code actuel)
+        // requestVinButton, sendFrameButton, exportLogsButton, clearLogsButton, generateReportButton
     }
 
     private val bluetoothReceiver = object : BroadcastReceiver() {
@@ -210,7 +254,6 @@ class MainActivity : AppCompatActivity() {
                 UpdateManager.showUpdateDialog(this)
                 return true
             }
-
             R.id.menu_quit -> {
                 finish()
                 return true
@@ -224,6 +267,7 @@ class MainActivity : AppCompatActivity() {
             VehicleManager.setVehicle(vehicle.first, vehicle.second, vehicle.third)
             refreshModuleSpinner()
             updateVehicleInfoDisplay()
+            updateButtonsVisibility()
         }
 
         val vehicules = listOf(
@@ -337,8 +381,6 @@ class MainActivity : AppCompatActivity() {
         }
         Toast.makeText(this, capText, Toast.LENGTH_LONG).show()
     }
-
-
 
     companion object {
         const val ACTION_USB_PERMISSION = "com.helly.psaimmotool.USB_PERMISSION"
