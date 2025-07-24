@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         showVehicleSummaryPopup()
         refreshModuleSpinner()
         setupButtons()
+        updateButtonsVisibility()
 
         registerReceiver(bluetoothReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
 
