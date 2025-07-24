@@ -38,6 +38,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/UpdateManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/UpdateManager.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -616,7 +617,23 @@
       <option name="project" value="LOCAL" />
       <updated>1753373075170</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="version 2.1.1">
+      <option name="closed" value="true" />
+      <created>1753376089101</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1753376089101</updated>
+    </task>
+    <task id="LOCAL-00018" summary="version 2.1.1">
+      <option name="closed" value="true" />
+      <created>1753376213864</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1753376213864</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
