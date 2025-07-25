@@ -38,12 +38,12 @@
     </string-array>
 
     <string-array name="module_list">
-        <item>OBD2 USB</item>
-        <item>OBD2 Bluetooth</item>
-        <item>K-Line USB</item>
-        <item>CANBUS</item>
-        <item>CANBUS UART</item>
-        <item>CAN DEMO</item>
+        <item>OBD2 (USB)</item>
+        <item>OBD2 (Bluetooth)</item>
+        <item>K-Line (USB)</item>
+        <item>CANBUS (USB)</item>
+        <item>CANBUS (UART)</item>
+        <item>CAN (Demo)</item>
     </string-array>
 
 </resources>
