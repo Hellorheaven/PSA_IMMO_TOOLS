@@ -26,12 +26,12 @@ object VehicleCapabilities {
             supportsObd2 = true,
             supportsKLine = true,
             compatibleModules = listOf(
-                "OBD2 USB",
-                "OBD2 Bluetooth",
-                "K-Line USB",
-                "CANBUS UART",
+                "OBD2 (USB)",
+                "OBD2 (Bluetooth)",
+                "K-Line (USB)",
+                "CANBUS (UART)",
                 "CANBUS",
-                "CAN DEMO"
+                "CAN (DEMO)"
             )
         ),
         "Peugeot" to "307" to Capabilities(
@@ -41,11 +41,11 @@ object VehicleCapabilities {
             supportsObd2 = true,
             supportsKLine = true,
             compatibleModules = listOf(
-                "OBD2 USB",
-                "OBD2 Bluetooth",
-                "K-Line USB",
+                "OBD2 (USB)",
+                "OBD2 (Bluetooth)",
+                "K-Line (USB)",
                 "CANBUS",
-                "CAN DEMO"
+                "CAN (DEMO)"
             )
         ),
 
@@ -57,10 +57,10 @@ object VehicleCapabilities {
             supportsObd2 = true,
             supportsKLine = false,
             compatibleModules = listOf(
-                "OBD2 USB",
-                "OBD2 Bluetooth",
+                "OBD2 (USB)",
+                "OBD2 (Bluetooth)",
                 "CANBUS UART",
-                "CAN DEMO"
+                "CAN (DEMO)"
             )
         ),
         "Ducati" to "1098" to Capabilities(
@@ -70,8 +70,8 @@ object VehicleCapabilities {
             supportsObd2 = true,
             supportsKLine = false,
             compatibleModules = listOf(
-                "OBD2 USB",
-                "OBD2 Bluetooth"
+                "OBD2 (USB)",
+                "OBD2 (Bluetooth)"
             )
         ),
         "Ducati" to "1198" to Capabilities(
@@ -81,8 +81,8 @@ object VehicleCapabilities {
             supportsObd2 = true,
             supportsKLine = false,
             compatibleModules = listOf(
-                "OBD2 USB",
-                "OBD2 Bluetooth"
+                "OBD2 (USB)",
+                "OBD2 (Bluetooth)"
             )
         ),
 
@@ -94,10 +94,10 @@ object VehicleCapabilities {
             supportsObd2 = true,
             supportsKLine = false,
             compatibleModules = listOf(
-                "OBD2 USB",
-                "OBD2 Bluetooth",
+                "OBD2 (USB)",
+                "OBD2 (Bluetooth)",
                 "CANBUS",
-                "CAN DEMO"
+                "CAN (DEMO)"
             )
         ),
         "MG" to "3" to Capabilities(
@@ -106,7 +106,7 @@ object VehicleCapabilities {
             supportsCan = false,
             supportsObd2 = true,
             supportsKLine = false,
-            compatibleModules = listOf("OBD2 USB", "OBD2 Bluetooth")
+            compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
         "MG" to "Marvel R" to Capabilities(
             R.string.brand_mg,
@@ -114,7 +114,7 @@ object VehicleCapabilities {
             supportsCan = true,
             supportsObd2 = true,
             supportsKLine = false,
-            compatibleModules = listOf("OBD2 USB", "OBD2 Bluetooth", "CANBUS UART")
+            compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)", "CANBUS UART")
         ),
 
         // --- FORD ---
@@ -125,11 +125,11 @@ object VehicleCapabilities {
             supportsObd2 = true,
             supportsKLine = false,
             compatibleModules = listOf(
-                "OBD2 USB",
-                "OBD2 Bluetooth",
+                "OBD2 (USB)",
+                "OBD2 (Bluetooth)",
                 "CANBUS UART",
                 "CANBUS",
-                "CAN DEMO"
+                "CAN (DEMO)"
             )
         ),
         "Ford" to "Mustang (2000+)" to Capabilities(
@@ -138,7 +138,7 @@ object VehicleCapabilities {
             supportsCan = false,
             supportsObd2 = true,
             supportsKLine = false,
-            compatibleModules = listOf("OBD2 USB", "OBD2 Bluetooth")
+            compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
         "Ford" to "Kuga" to Capabilities(
             R.string.brand_ford,
@@ -146,7 +146,7 @@ object VehicleCapabilities {
             supportsCan = false,
             supportsObd2 = true,
             supportsKLine = false,
-            compatibleModules = listOf("OBD2 USB", "OBD2 Bluetooth")
+            compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
         "Ford" to "Puma" to Capabilities(
             R.string.brand_ford,
@@ -154,7 +154,7 @@ object VehicleCapabilities {
             supportsCan = false,
             supportsObd2 = true,
             supportsKLine = false,
-            compatibleModules = listOf("OBD2 USB", "OBD2 Bluetooth")
+            compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
         "Ford" to "Fiesta" to Capabilities(
             R.string.brand_ford,
@@ -162,7 +162,7 @@ object VehicleCapabilities {
             supportsCan = false,
             supportsObd2 = true,
             supportsKLine = false,
-            compatibleModules = listOf("OBD2 USB", "OBD2 Bluetooth")
+            compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
 
         // --- TOYOTA ---
@@ -172,7 +172,7 @@ object VehicleCapabilities {
             supportsCan = true,
             supportsObd2 = true,
             supportsKLine = false,
-            compatibleModules = listOf("OBD2 USB", "OBD2 Bluetooth", "CANBUS")
+            compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)", "CANBUS")
         )
     )
 

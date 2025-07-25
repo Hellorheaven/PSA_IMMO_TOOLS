@@ -37,7 +37,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.2">
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/VehicleCapabilities.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/VehicleCapabilities.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -680,7 +680,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753430511436</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="version 2.1.2">
+      <option name="closed" value="true" />
+      <created>1753431286568</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1753431286568</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
