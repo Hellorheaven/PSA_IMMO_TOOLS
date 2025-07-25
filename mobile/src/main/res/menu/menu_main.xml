@@ -1,22 +1,25 @@
-<!-- app/src/main/res/menu/menu_main.xml -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Sélection véhicule -->
     <item
         android:id="@+id/menu_select_vehicle"
         android:title="@string/menu_vehicle"
-        app:showAsAction="never">
-        <!-- (Tu peux laisser ton sous-menu de véhicules actuel ici) -->
-    </item>
+        app:showAsAction="never" />
 
-    <!-- Modules (sous-menu rempli dynamiquement) -->
+    <!-- Sélection module -->
     <item
-        android:id="@+id/menu_modules"
-        android:title="@string/menu_modules"
-        app:showAsAction="never">
-        <menu />
-    </item>
+        android:id="@+id/menu_select_module"
+        android:title="@string/select_module"
+        app:showAsAction="never" />
 
+    <!-- Sélection BT -->
+    <item
+        android:id="@+id/menu_select_bt_device"
+        android:title="@string/bluetooth_devices"
+        app:showAsAction="never" />
+
+    <!-- Thème -->
     <item
         android:id="@+id/menu_theme"
         android:title="@string/menu_theme"
@@ -31,6 +34,7 @@
         </menu>
     </item>
 
+    <!-- Langue -->
     <item
         android:id="@+id/menu_language"
         android:title="@string/menu_language"
@@ -45,22 +49,19 @@
         </menu>
     </item>
 
+    <!-- Éditeur véhicule -->
     <item
         android:id="@+id/menu_vehicle_editor"
         android:title="@string/menu_vehicle_editor"
         app:showAsAction="never" />
 
+    <!-- Update (si tu conserves UpdateManager) -->
     <item
         android:id="@+id/menu_update"
         android:title="@string/menu_update"
         app:showAsAction="never" />
 
-    <!-- Settings -->
-    <item
-        android:id="@+id/menu_settings"
-        android:title="@string/menu_settings"
-        app:showAsAction="never" />
-
+    <!-- Quitter -->
     <item
         android:id="@+id/menu_quit"
         android:title="@string/menu_quit"

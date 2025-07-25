@@ -163,6 +163,7 @@
     <string name="pref_autoscroll_title">Auto-scroll des logs</string>
     <string name="pref_autoscroll_on">Le log défile automatiquement jusqu\'en bas</string>
     <string name="pref_autoscroll_off">Le log ne défile plus automatiquement</string>
-
+    <string name="select_module">Sélectionner un module</string>
+    <string name="bluetooth_devices">Périphériques Bluetooth</string>
 
 </resources>

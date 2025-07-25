@@ -162,6 +162,8 @@
     <string name="pref_autoscroll_on">The log scrolls automatically to the bottom</string>
     <string name="pref_autoscroll_off">The log no longer scrolls automatically</string>
 
+    <string name="select_module">Select Module</string>
+    <string name="bluetooth_devices">Bluetooth Devices</string>
 
 
 
