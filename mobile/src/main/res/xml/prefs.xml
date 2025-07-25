@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:key="pref_autoscroll"
+        android:title="Auto-scroll des logs"
+        android:defaultValue="true"
+        android:summaryOn="Le log défile automatiquement jusqu'en bas"
+        android:summaryOff="Le log ne défile plus automatiquement" />
+
+</PreferenceScreen>

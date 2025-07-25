@@ -155,4 +155,14 @@
     <string name="update_parse_error_fallback">Le fichier téléchargé semble invalide. Voulez-vous ouvrir le navigateur pour le télécharger manuellement ?</string>
     <string name="update_open_browser">Ouvrir le navigateur</string>
 
+
+    <!-- Nouveau -->
+    <string name="menu_modules">Modules</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="pref_autoscroll_title">Auto-scroll des logs</string>
+    <string name="pref_autoscroll_on">Le log défile automatiquement jusqu\'en bas</string>
+    <string name="pref_autoscroll_off">Le log ne défile plus automatiquement</string>
+
+
 </resources>

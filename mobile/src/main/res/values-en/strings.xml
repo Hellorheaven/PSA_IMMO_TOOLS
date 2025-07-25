@@ -153,5 +153,15 @@
     <string name="update_parse_error_fallback">The downloaded file seems invalid. Open the browser to download and install manually?</string>
     <string name="update_open_browser">Open browser</string>
 
+    <!-- Nouveau -->
+    <string name="menu_modules">Modules</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="pref_autoscroll_title">Log Auto-scroll</string>
+    <string name="pref_autoscroll_on">The log scrolls automatically to the bottom</string>
+    <string name="pref_autoscroll_off">The log no longer scrolls automatically</string>
+
+
+
 
 </resources>
