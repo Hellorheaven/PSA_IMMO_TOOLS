@@ -59,26 +59,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.2">
-      <change afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/SettingsActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/SettingsFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/ui/DiagnosticsFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/Prefs.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/src/main/res/layout-land/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/src/main/res/layout-sw600dp/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/src/main/res/layout/fragment_diagnostics.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/src/main/res/xml/prefs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/menu/menu_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/menu/menu_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/release/baselineProfiles/0/mobile-release.dm" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/baselineProfiles/0/mobile-release.dm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/release/baselineProfiles/1/mobile-release.dm" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/baselineProfiles/1/mobile-release.dm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/release/mobile-release.apk" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/mobile-release.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/release/output-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/output-metadata.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -761,7 +747,23 @@
       <option name="project" value="LOCAL" />
       <updated>1753451509781</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="version 2.1.2">
+      <option name="closed" value="true" />
+      <created>1753455192111</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1753455192112</updated>
+    </task>
+    <task id="LOCAL-00031" summary="version 2.1.2">
+      <option name="closed" value="true" />
+      <created>1753455207142</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1753455207142</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
