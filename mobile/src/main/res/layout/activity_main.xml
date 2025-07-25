@@ -1,157 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
+    android:id="@+id/rootContainer"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true">
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="?attr/actionBarTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:elevation="4dp"
+        android:title="@string/app_name" />
 
-    <!-- Sélecteur de module -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_module"
-        android:textStyle="bold"
-        android:paddingTop="8dp" />
-
-    <Spinner
-        android:id="@+id/moduleSelector"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"
-        android:padding="4dp" />
-
-    <!-- Sélecteur de périphérique Bluetooth -->
-    <TextView
-        android:id="@+id/bluetoothDeviceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_bluetooth_device"
-        android:paddingTop="8dp"
-        android:visibility="gone" />
-
-    <Spinner
-        android:id="@+id/bluetoothDeviceSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"
-        android:visibility="gone"
-        android:padding="4dp" />
-
-    <!-- Boutons principaux -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingTop="8dp">
-
-        <Button
-            android:id="@+id/connectButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_connect" />
-
-        <Button
-            android:id="@+id/requestVinButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_request_vin" />
-
-        <Button
-            android:id="@+id/requestPinButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_request_pin" />
-    </LinearLayout>
-
-    <!-- Start CAN listening -->
-    <Button
-        android:id="@+id/startCanListenButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_start_can_listen"
-        android:layout_marginTop="8dp" />
-
-    <!-- Frame input -->
-    <EditText
-        android:id="@+id/inputFrameText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_input_frame"
-        android:inputType="text"
-        android:layout_marginTop="8dp" />
-
-    <Button
-        android:id="@+id/sendFrameButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_send_frame" />
-
-    <!-- Zone de logs -->
-    <TextView
-        android:id="@+id/statusText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/status_disconnected"
-        android:textStyle="bold"
-        android:paddingTop="8dp" />
-
+    <!-- Contenu principal défilable -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingTop="4dp">
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/outputText"
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:paddingBottom="32dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:scrollbars="vertical" />
+            android:layout_height="wrap_content">
+
+            <!-- Sélecteur de module -->
+            <Spinner
+                android:id="@+id/moduleSelector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Sélecteur Bluetooth (caché par défaut) -->
+            <Spinner
+                android:id="@+id/bluetoothDeviceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone" />
+
+            <!-- Boutons de commandes -->
+            <Button
+                android:id="@+id/connectButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_connect" />
+
+            <Button
+                android:id="@+id/requestVinButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_request_vin" />
+
+            <Button
+                android:id="@+id/requestPinButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_request_pin" />
+
+            <Button
+                android:id="@+id/startCanListenButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_start_can_listen" />
+
+            <!-- Saisie et envoi de trames -->
+            <EditText
+                android:id="@+id/inputFrameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_input_frame"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/sendFrameButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_send_frame" />
+
+            <!-- Logs -->
+            <Button
+                android:id="@+id/exportLogsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_export_logs" />
+
+            <Button
+                android:id="@+id/clearLogsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_clear_logs" />
+
+            <Button
+                android:id="@+id/generateReportButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_generate_report" />
+
+            <!-- État de connexion -->
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="@string/status_disconnected"
+                android:paddingTop="12dp"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Zone de log -->
+            <TextView
+                android:id="@+id/outputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:paddingTop="8dp"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+        </LinearLayout>
     </ScrollView>
-
-    <!-- Boutons logs et rapport -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingTop="8dp">
-
-        <Button
-            android:id="@+id/exportLogsButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_export_logs" />
-
-        <Button
-            android:id="@+id/clearLogsButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_clear_logs" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/generateReportButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_generate_report"
-        android:layout_marginTop="8dp" />
 </LinearLayout>

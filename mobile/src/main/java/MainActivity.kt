@@ -15,6 +15,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.helly.psaimmotool.modules.*
 import com.helly.psaimmotool.utils.*
 import java.io.File
@@ -48,6 +51,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Gestion des insets (barres système/clavier)
+        val root = findViewById<View>(R.id.rootContainer)
+        ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+            val sys = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            )
+            v.updatePadding(top = sys.top, bottom = sys.bottom)
+            insets
+        }
+
         ContextProvider.init(applicationContext)
         DiagnosticRecorder.clear()
 
@@ -65,7 +78,6 @@ class MainActivity : AppCompatActivity() {
         statusText = findViewById(R.id.statusText)
         outputText = findViewById(R.id.outputText)
 
-        // Caché par défaut : n'apparaît que lorsque le module BT est choisi
         bluetoothDeviceSpinner.visibility = View.GONE
 
         UiUpdater.init(statusText, outputText)
@@ -76,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         showVehicleSummaryPopup()
         refreshModuleSpinner()
+        updateUiForModule(moduleSelector.selectedItem?.toString() ?: "")
         setupButtons()
 
         registerReceiver(bluetoothReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
@@ -83,23 +96,34 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN),
+                arrayOf(
+                    Manifest.permission.BLUETOOTH_CONNECT,
+                    Manifest.permission.BLUETOOTH_SCAN
+                ),
                 1
             )
         }
 
         moduleSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: android.view.View?,
+                position: Int,
+                id: Long
+            ) {
                 val selected = moduleSelector.selectedItem.toString()
-                // Met à jour la visibilité des boutons selon le module
-                updateUiForSelectedModule(selected)
+                updateUiForModule(selected)
 
                 if (selected == getString(R.string.module_obd2_bluetooth)) {
                     bluetoothDevices.clear()
                     bluetoothDeviceSpinner.visibility = View.VISIBLE
                     bluetoothAdapter?.cancelDiscovery()
                     bluetoothAdapter?.startDiscovery()
-                    Toast.makeText(this@MainActivity, getString(R.string.bluetooth_scanning), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.bluetooth_scanning),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     bluetoothDeviceSpinner.visibility = View.GONE
                     bluetoothAdapter?.cancelDiscovery()
@@ -110,24 +134,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Affiche / masque les boutons selon les capacités du module choisi.
-     * - PIN & CAN Listening : CANBUS / CANBUS UART / CAN DEMO
-     * - Autres modules : cachés
-     */
-    private fun updateUiForSelectedModule(selected: String) {
-        val canModules = setOf(
-            getString(R.string.module_canbus),
-            getString(R.string.module_canbus_uart),
-            getString(R.string.module_can_demo)
-        )
+    private fun updateUiForModule(selected: String) {
+        val isBt = selected == getString(R.string.module_obd2_bluetooth)
+        val supportsPin = selected == getString(R.string.module_canbus) ||
+                selected == getString(R.string.module_canbus_uart)
+        val supportsListen = selected == getString(R.string.module_canbus) ||
+                selected == getString(R.string.module_canbus_uart) ||
+                selected == getString(R.string.module_can_demo)
 
-        val showPin = selected in canModules
-        val showListen = selected in canModules
-
-        requestPinButton.visibility = if (showPin) View.VISIBLE else View.GONE
-        startCanListenButton.visibility = if (showListen) View.VISIBLE else View.GONE
-        // Les autres boutons restent visibles (VIN, Send, Export, Clear, Report)
+        bluetoothDeviceSpinner.visibility = if (isBt) View.VISIBLE else View.GONE
+        requestPinButton.visibility = if (supportsPin) View.VISIBLE else View.GONE
+        startCanListenButton.visibility = if (supportsListen) View.VISIBLE else View.GONE
     }
 
     private fun refreshModuleSpinner() {
@@ -145,7 +162,8 @@ class MainActivity : AppCompatActivity() {
             currentModule = when (selected) {
                 getString(R.string.module_obd2_usb) -> Obd2UsbModule(this)
                 getString(R.string.module_obd2_bluetooth) -> {
-                    val device = bluetoothDevices.getOrNull(bluetoothDeviceSpinner.selectedItemPosition)
+                    val device =
+                        bluetoothDevices.getOrNull(bluetoothDeviceSpinner.selectedItemPosition)
                     Obd2BluetoothModule(this, device)
                 }
                 getString(R.string.module_kline_usb) -> KLineUsbModule(this)
@@ -163,7 +181,11 @@ class MainActivity : AppCompatActivity() {
         requestPinButton.setOnClickListener {
             val vehicle = VehicleManager.selectedVehicle
             if (!PsaKeyCalculator.hasKeyAlgoFor(vehicle)) {
-                Toast.makeText(this, getString(R.string.no_key_algo_for_vehicle), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.no_key_algo_for_vehicle),
+                    Toast.LENGTH_LONG
+                ).show()
             }
             currentModule?.requestPin()
         }
@@ -194,11 +216,16 @@ class MainActivity : AppCompatActivity() {
     private val bluetoothReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == BluetoothDevice.ACTION_FOUND) {
-                val device: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+                val device: BluetoothDevice? =
+                    intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
                 if (device != null && !bluetoothDevices.contains(device)) {
                     bluetoothDevices.add(device)
                     val names = bluetoothDevices.map { it.name ?: it.address }
-                    bluetoothDeviceSpinner.adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, names)
+                    bluetoothDeviceSpinner.adapter = ArrayAdapter(
+                        this@MainActivity,
+                        android.R.layout.simple_spinner_item,
+                        names
+                    )
                 }
             }
         }
@@ -243,10 +270,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, VehicleEditorActivity::class.java))
                 return true
             }
-            R.id.menu_update -> {
-                UpdateManager.showUpdateDialog(this)
-                return true
-            }
             R.id.menu_quit -> {
                 finish()
                 return true
@@ -259,8 +282,10 @@ class MainActivity : AppCompatActivity() {
         fun updateAndRefresh(vehicle: Triple<String, String, Int>) {
             VehicleManager.setVehicle(vehicle.first, vehicle.second, vehicle.third)
             refreshModuleSpinner()
+            updateUiForModule(moduleSelector.selectedItem?.toString() ?: "")
             updateVehicleInfoDisplay()
         }
+
         val vehicules = listOf(
             Triple("Peugeot", "207", 2008),
             Triple("Peugeot", "207", 2010),
@@ -288,7 +313,8 @@ class MainActivity : AppCompatActivity() {
         val vehicle = "$brand $model $year"
         val logs = outputText.text.toString()
         val module = currentModuleName.ifBlank { getString(R.string.module_unknown) }
-        val connectionStatus = if (isConnected) getString(R.string.connection_success) else getString(R.string.connection_failed)
+        val connectionStatus =
+            if (isConnected) getString(R.string.connection_success) else getString(R.string.connection_failed)
 
         val capabilities = VehicleCapabilities.getCapabilities(brand, model)
         val supportsCan = capabilities?.supportsCan?.toString() ?: "N/A"
