@@ -1,25 +1,93 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <!-- Sélection véhicule -->
-    <item
-        android:id="@+id/menu_select_vehicle"
-        android:title="@string/menu_vehicle"
-        app:showAsAction="never" />
-
-    <!-- Sélection module -->
     <item
         android:id="@+id/menu_select_module"
         android:title="@string/select_module"
         app:showAsAction="never" />
-
-    <!-- Sélection BT -->
     <item
-        android:id="@+id/menu_select_bt_device"
-        android:title="@string/bluetooth_devices"
-        app:showAsAction="never" />
+        android:id="@+id/menu_select_vehicle"
+        android:title="@string/menu_vehicle"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/menu_peugeot"
+                android:title="@string/brand_peugeot">
+                <menu>
+                    <item
+                        android:id="@+id/menu_peugeot_207"
+                        android:title="@string/model_207" />
+                    <item
+                        android:id="@+id/menu_peugeot_307"
+                        android:title="@string/model_307" />
+                </menu>
+            </item>
 
-    <!-- Thème -->
+            <item
+                android:id="@+id/menu_ford"
+                android:title="@string/brand_ford">
+                <menu>
+                    <item
+                        android:id="@+id/menu_ford_mustang"
+                        android:title="@string/model_mustang_mache" />
+                    <item
+                        android:id="@+id/menu_ford_series"
+                        android:title="@string/model_mustang_series" />
+                    <item
+                        android:id="@+id/menu_ford_kuga"
+                        android:title="@string/model_kuga" />
+                    <item
+                        android:id="@+id/menu_ford_puma"
+                        android:title="@string/model_puma" />
+                    <item
+                        android:id="@+id/menu_ford_fiesta"
+                        android:title="@string/model_fiesta" />
+                </menu>
+            </item>
+
+            <item
+                android:id="@+id/menu_mg"
+                android:title="@string/brand_mg">
+                <menu>
+                    <item
+                        android:id="@+id/menu_mg_3"
+                        android:title="@string/model_3" />
+                    <item
+                        android:id="@+id/menu_mg_4"
+                        android:title="@string/model_4" />
+                    <item
+                        android:id="@+id/menu_mg_marvel_r"
+                        android:title="@string/model_marvel_r" />
+                </menu>
+            </item>
+
+            <item
+                android:id="@+id/menu_ducati"
+                android:title="@string/brand_ducati">
+                <menu>
+                    <item
+                        android:id="@+id/menu_ducati_848"
+                        android:title="@string/model_848" />
+                    <item
+                        android:id="@+id/menu_ducati_1098"
+                        android:title="@string/model_1098" />
+                    <item
+                        android:id="@+id/menu_ducati_1198"
+                        android:title="@string/model_1198" />
+                </menu>
+            </item>
+
+            <item
+                android:id="@+id/menu_toyota"
+                android:title="@string/brand_toyota">
+                <menu>
+                    <item
+                        android:id="@+id/menu_toyota_corolla"
+                        android:title="@string/model_corolla" />
+                </menu>
+            </item>
+        </menu>
+    </item>
+
     <item
         android:id="@+id/menu_theme"
         android:title="@string/menu_theme"
@@ -34,7 +102,6 @@
         </menu>
     </item>
 
-    <!-- Langue -->
     <item
         android:id="@+id/menu_language"
         android:title="@string/menu_language"
@@ -49,19 +116,19 @@
         </menu>
     </item>
 
-    <!-- Éditeur véhicule -->
     <item
         android:id="@+id/menu_vehicle_editor"
         android:title="@string/menu_vehicle_editor"
         app:showAsAction="never" />
-
-    <!-- Update (si tu conserves UpdateManager) -->
+    <item
+        android:id="@+id/menu_settings"
+        android:title="Settings"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_update"
         android:title="@string/menu_update"
         app:showAsAction="never" />
 
-    <!-- Quitter -->
     <item
         android:id="@+id/menu_quit"
         android:title="@string/menu_quit"
