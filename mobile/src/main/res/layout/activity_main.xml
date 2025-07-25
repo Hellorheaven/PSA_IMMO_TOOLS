@@ -16,8 +16,9 @@
         android:elevation="4dp"
         android:title="@string/app_name" />
 
-    <!-- Contenu principal défilable -->
+    <!-- Contenu principal scrollable -->
     <ScrollView
+        android:id="@+id/mainScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -26,7 +27,6 @@
         <LinearLayout
             android:orientation="vertical"
             android:padding="16dp"
-            android:paddingBottom="32dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Sélecteur Bluetooth (caché par défaut) -->
+            <!-- Sélecteur Bluetooth -->
             <Spinner
                 android:id="@+id/bluetoothDeviceSpinner"
                 android:layout_width="match_parent"
