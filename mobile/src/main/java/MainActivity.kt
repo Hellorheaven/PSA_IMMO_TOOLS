@@ -105,18 +105,6 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_select_module -> {
                 showModuleSelectionDialog(); true
             }
-            R.id.menu_theme_light -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); true
-            }
-            R.id.menu_theme_dark -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); true
-            }
-            R.id.menu_language_fr -> {
-                LocaleUtils.setLocaleAndRestart(this, "fr"); true
-            }
-            R.id.menu_language_en -> {
-                LocaleUtils.setLocaleAndRestart(this, "en"); true
-            }
             R.id.menu_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java)); true
             }
@@ -216,7 +204,17 @@ class MainActivity : AppCompatActivity() {
             ReportGenerator.generate(this, currentModuleName, outputText.text.toString())
         }
     }
-
+    private fun buildModuleForName(name: String) {
+        currentModule = when (name) {
+            getString(R.string.module_obd2_usb) -> Obd2UsbModule(this)
+            getString(R.string.module_obd2_bluetooth) -> null // handled after BT selection
+            getString(R.string.module_kline_usb) -> KLineUsbModule(this)
+            getString(R.string.module_canbus) -> CanBusModule(this)
+            getString(R.string.module_canbus_uart) -> CanBusUartModule(this)
+            getString(R.string.module_can_demo) -> GenericCanDemoModule(this)
+            else -> null
+        }
+    }
     private fun bindViews() {
         moduleSelector = findViewById(R.id.moduleSelector)
         bluetoothDeviceSpinner = findViewById(R.id.bluetoothDeviceSpinner)

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.helly.psaimmotool.utils.LocaleUtils
 import com.helly.psaimmotool.utils.VehicleManager
 
+
 class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.prefs, rootKey)
@@ -22,12 +23,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<androidx.preference.Preference>("pref_theme_light")?.setOnPreferenceClickListener {
-            LocaleUtils.setTheme(requireActivity(), false)
+            LocaleUtils.setTheme("light")
             true
         }
 
         findPreference<androidx.preference.Preference>("pref_theme_dark")?.setOnPreferenceClickListener {
-            LocaleUtils.setTheme(requireActivity(), true)
+            LocaleUtils.setTheme("dark")
             true
         }
 
