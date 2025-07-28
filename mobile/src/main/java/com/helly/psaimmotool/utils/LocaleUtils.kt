@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import java.util.Locale
+import androidx.appcompat.app.AppCompatDelegate
 
 object LocaleUtils {
 //    fun setLocaleAndRestart(activity: Activity, languageCode: String) {
@@ -25,7 +26,13 @@ object LocaleUtils {
 //        activity.startActivity(refresh)
 //        activity.finish()
 //    }
-
+fun setTheme(mode: String) {
+    when (mode) {
+        "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        "system" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+    }
+}
     fun setLocaleAndRestart(activity: Activity, languageCode: String) {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
