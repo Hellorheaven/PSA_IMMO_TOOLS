@@ -135,6 +135,8 @@
     <string name="no_paired_bt_devices">⚠️ No paired Bluetooth devices found</string>
     <string name="unknown_device">Unknown device</string>
     <string name="bluetooth_scanning">🔍 Scanning for Bluetooth devices…</string>
+    <string name="bt_discovery_started">Bluetooth device discovery started…</string>
+    <string name="bt_discovery_finished">Bluetooth discovery completed.</string>
 
     <string name="menu_update">Update</string>
 

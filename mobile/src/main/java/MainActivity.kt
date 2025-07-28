@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.*
+import android.content.pm.PackageManager
 
 import android.os.Build
 import android.os.Bundle
@@ -64,6 +65,12 @@ class MainActivity : AppCompatActivity() {
                         btNamesAdapter.notifyDataSetChanged()
                     }
                 }
+                BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
+                    Toast.makeText(context, R.string.bt_discovery_started, Toast.LENGTH_SHORT).show()
+                }
+                BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
+                    Toast.makeText(context, R.string.bt_discovery_finished, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -92,6 +99,8 @@ class MainActivity : AppCompatActivity() {
 
         val filter = IntentFilter().apply {
             addAction(BluetoothDevice.ACTION_FOUND)
+            addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
+            addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
         }
         registerReceiver(bluetoothReceiver, filter)
     }
@@ -137,6 +146,8 @@ class MainActivity : AppCompatActivity() {
                 if (selected == getString(R.string.module_obd2_bluetooth)) {
                     currentModule = null
                     updateUiVisibilityForModule()
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED
+
                     openBluetoothLivePicker()
                 } else {
                     buildModuleForName(selected)
@@ -148,7 +159,10 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
     private fun openBluetoothLivePicker() {
+        bluetoothAdapter?.cancelDiscovery()
         bluetoothDevices.clear()
+        btNamesAdapter.clear() // Sinon l’UI garde les anciens éléments
+
         val listView = ListView(this)
         btNamesAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
         listView.adapter = btNamesAdapter

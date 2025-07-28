@@ -137,6 +137,8 @@
     <string name="no_paired_bt_devices">⚠️ Aucun appareil Bluetooth appairé trouvé</string>
     <string name="unknown_device">Appareil inconnu</string>
     <string name="bluetooth_scanning">🔍 Recherche de périphériques Bluetooth…</string>
+    <string name="bt_discovery_started">Recherche des périphériques Bluetooth en cours…</string>
+    <string name="bt_discovery_finished">Recherche Bluetooth terminée.</string>
 
     <string name="menu_update">Mise à jour</string>
 
