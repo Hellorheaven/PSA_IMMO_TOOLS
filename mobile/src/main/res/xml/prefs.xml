@@ -1,10 +1,39 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ListPreference
+        android:key="pref_theme"
+        android:title="@string/pref_title_theme"
+        android:entries="@array/theme_entries"
+        android:entryValues="@array/theme_values"
+        android:defaultValue="system" />
+
+    <ListPreference
+        android:key="pref_language"
+        android:title="@string/pref_title_language"
+        android:entries="@array/lang_entries"
+        android:entryValues="@array/lang_values"
+        android:defaultValue="en" />
+
     <SwitchPreferenceCompat
-        android:key="pref_autoscroll"
-        android:title="Auto-scroll des logs"
-        android:defaultValue="true"
-        android:summaryOn="Le log défile automatiquement jusqu'en bas"
-        android:summaryOff="Le log ne défile plus automatiquement" />
+        android:key="pref_auto_scroll"
+        android:title="@string/pref_title_autoscroll"
+        android:defaultValue="true" />
+
+    <Preference
+        android:key="pref_vehicle_editor"
+        android:title="@string/pref_title_vehicle_editor" />
+
+
+    <PreferenceCategory android:title="@string/category_update">
+        <Preference
+            android:key="pref_check_update"
+            android:title="@string/pref_title_update"
+            android:summary="@string/setting_check_update_summary" />
+
+        <Preference
+            android:key="pref_version"
+            android:title="@string/pref_version_summary"
+            android:summary="..." />
+    </PreferenceCategory>
 
 </PreferenceScreen>

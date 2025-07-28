@@ -1,4 +1,3 @@
-// app/src/main/java/com/helly/psaimmotool/SettingsActivity.kt
 package com.helly.psaimmotool
 
 import android.os.Bundle
@@ -7,8 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportFragmentManager
-            .beginTransaction()
+        supportFragmentManager.beginTransaction()
             .replace(android.R.id.content, SettingsFragment())
             .commit()
     }

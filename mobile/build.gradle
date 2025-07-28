@@ -3,16 +3,42 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+
+// Versioning
+// This script reads the version properties from a file and increments the patch version.
+// It computes the version code and version name based on the major, minor, and patch versions.
+// The version properties file is expected to have the keys VERSION_MAJOR, VERSION_MINOR, and VERSION_PATCH
+// The computed version code is a combination of the major, minor, and patch versions.
+def versionPropsFile = file('version.properties')
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+
+if (versionPropsFile.canRead()) {
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(versionPropsFile))
+
+    versionMajor = versionProps['VERSION_MAJOR'].toInteger()
+    versionMinor = versionProps['VERSION_MINOR'].toInteger()
+    versionPatch = versionProps['VERSION_PATCH'].toInteger() + 1
+
+    versionProps['VERSION_PATCH'] = versionPatch.toString()
+    versionProps.store(versionPropsFile.newWriter(), null)
+}
+
+def computedVersionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
+def computedVersionName = "${versionMajor}.${versionMinor}.${versionPatch}"
+
 android {
     namespace 'com.helly.psaimmotool'
     compileSdk 36
 
     defaultConfig {
         applicationId "com.helly.psaimmotool"
-        minSdk 28
+        minSdk 21
         targetSdk 36
-        versionCode 2
-        versionName '2.1.11'
+        versionCode computedVersionCode
+        versionName computedVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -139,7 +139,7 @@
     <string name="bluetooth_scanning">🔍 Recherche de périphériques Bluetooth…</string>
 
     <string name="menu_update">Mise à jour</string>
-    <string name="update_title">Mise à jour</string>
+
     <string name="update_current_version">Version actuelle : %1$s</string>
     <string name="update_check">Vérifier en ligne</string>
     <string name="update_checking">Vérification de nouvelle version…</string>
@@ -165,5 +165,48 @@
     <string name="pref_autoscroll_off">Le log ne défile plus automatiquement</string>
     <string name="select_module">Sélectionner un module</string>
     <string name="bluetooth_devices">Périphériques Bluetooth</string>
+
+
+
+    <string name="pref_title_theme">Thème</string>
+    <string name="pref_title_language">Langue</string>
+    <string name="pref_title_autoscroll">Défilement automatique des journaux</string>
+    <string name="pref_title_vehicle_editor">Éditeur de véhicules</string>
+    <string name="pref_title_update">Vérifier les mises à jour</string>
+    <string name="pref_version_summary">Version de l’application</string>
+
+    <string-array name="theme_entries">
+        <item>Système par défaut</item>
+        <item>Clair</item>
+        <item>Sombre</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
+    <string-array name="lang_entries">
+        <item>Anglais</item>
+        <item>Français</item>
+    </string-array>
+    <string-array name="lang_values">
+        <item>en</item>
+        <item>fr</item>
+    </string-array>
+
+    <!-- Mise à jour -->
+    <string name="update_title">Mise à jour disponible</string>
+    <string name="update_message">Une nouvelle version %1$s est disponible. Voulez-vous l’installer ?</string>
+    <string name="update_error_check">❌ Échec de la vérification de mise à jour.</string>
+    <string name="update_download_failed">❌ Le téléchargement a échoué.</string>
+    <string name="update_open_browser_failed">❌ Impossible d’ouvrir l’installateur. Essayez avec le navigateur.</string>
+    <string name="update_latest_version">✅ Vous avez déjà la dernière version (%1$s).</string>
+
+    <string name="category_settings">Paramètres</string>
+    <string name="category_update">Mise à jour</string>
+    <string name="setting_check_update">Vérifier les mises à jour</string>
+    <string name="setting_check_update_summary">Vérifie si une nouvelle version est disponible</string>
+    <string name="setting_current_version">Version actuelle</string>
 
 </resources>
