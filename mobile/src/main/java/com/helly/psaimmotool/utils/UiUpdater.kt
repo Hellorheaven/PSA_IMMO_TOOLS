@@ -1,10 +1,9 @@
 package com.helly.psaimmotool.utils
-
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.TextView
 import androidx.preference.PreferenceManager
-import com.helly.psaimmotool.R
+import com.helly.psaimmotool.*
 
 object UiUpdater {
 
@@ -20,7 +19,7 @@ object UiUpdater {
 
 
 
-    fun appendLog(outputView: TextView?,message: String) {
+    fun appendLog(outputText: TextView?,message: String) {
         outputText?.append("$message\n")
         autoScrollIfEnabled()
     }
@@ -30,8 +29,9 @@ object UiUpdater {
         autoScrollIfEnabled()
     }
 
-    fun clearLog() {
+    fun clearLog(context: Context) {
         outputText?.text = ""
+        appendLog(context.getString(R.string.logs_cleared))
     }
 
     fun setConnectedStatus(status: String, module: String) {
@@ -46,10 +46,10 @@ object UiUpdater {
         prefs.edit().putBoolean(KEY_AUTO_SCROLL, enabled).apply()
     }
 
-    fun isAutoScrollEnabled(context: Context): Boolean {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(KEY_AUTO_SCROLL, true)
-    }
+//    fun isAutoScrollEnabled(context: Context): Boolean {
+//        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+ //       return prefs.getBoolean(KEY_AUTO_SCROLL, true)
+ //   }
 
     private fun autoScrollIfEnabled() {
         // Peut être enrichi pour scroll automatique

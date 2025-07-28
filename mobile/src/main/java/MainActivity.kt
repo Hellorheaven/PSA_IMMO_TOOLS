@@ -4,11 +4,11 @@ package com.helly.psaimmotool
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.bluetooth.BluetoothAdapter
+
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.*
-import android.content.pm.PackageManager
+
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -17,13 +17,13 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+
 import androidx.core.view.isVisible
 import com.helly.psaimmotool.modules.*
 import com.helly.psaimmotool.utils.*
-import java.util.*
+
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -207,8 +207,7 @@ class MainActivity : AppCompatActivity() {
             LogExporter.exportLogs(this, outputText.text.toString())
         }
         clearLogsButton.setOnClickListener {
-            outputText.text = ""
-            UiUpdater.appendLog(getString(R.string.logs_cleared))
+            UiUpdater.clearLog(this)
         }
         generateReportButton.setOnClickListener {
             ReportGenerator.generate(this, currentModuleName, outputText.text.toString())

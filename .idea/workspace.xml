@@ -58,18 +58,17 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.19">
+    <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.27">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/release/baselineProfiles/0/mobile-release.dm" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/baselineProfiles/0/mobile-release.dm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/release/baselineProfiles/1/mobile-release.dm" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/baselineProfiles/1/mobile-release.dm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/release/mobile-release.apk" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/mobile-release.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/release/output-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/output-metadata.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/SettingsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/SettingsFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/ui/DiagnosticsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/ui/DiagnosticsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/LocaleUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/LocaleUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/ReportGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/ReportGenerator.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/UiUpdater.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/UiUpdater.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/xml/prefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/xml/prefs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/version.properties" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/version.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -244,7 +243,8 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default"
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "com.github.copilot.settings.general.GeneralConfigurable"
   },
   "keyToStringList": {
     "ExportApk.BuildVariants": [
@@ -817,7 +817,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753704245330</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="version 2.1.27">
+      <option name="closed" value="true" />
+      <created>1753710387369</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1753710387369</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -838,7 +846,8 @@
     <MESSAGE value="version 2.1.2" />
     <MESSAGE value="version 2.1.14" />
     <MESSAGE value="version 2.1.19" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 2.1.19" />
+    <MESSAGE value="version 2.1.27" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 2.1.27" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -7,10 +7,9 @@ import com.helly.psaimmotool.BuildConfig
 import androidx.preference.PreferenceFragmentCompat
 import com.helly.psaimmotool.update.UpdateManager
 import com.helly.psaimmotool.utils.UiUpdater
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+
 import com.helly.psaimmotool.utils.LocaleUtils
-import com.helly.psaimmotool.utils.VehicleManager
+
 import androidx.preference.ListPreference
 
 
@@ -61,6 +60,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("pref_version")?.summary =
             "v${BuildConfig.VERSION_NAME} (Build ${BuildConfig.VERSION_CODE})"
+
 
 
     }

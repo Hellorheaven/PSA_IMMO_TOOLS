@@ -21,6 +21,7 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("DEPRECATION")
 class DiagnosticsFragment : Fragment() {
 
     private lateinit var bluetoothDeviceSpinner: Spinner
