@@ -5,11 +5,8 @@ import android.os.Bundle
 import androidx.preference.Preference
 import com.helly.psaimmotool.BuildConfig
 import androidx.preference.PreferenceFragmentCompat
-import com.helly.psaimmotool.update.UpdateManager
-import com.helly.psaimmotool.utils.UiUpdater
-
-import com.helly.psaimmotool.utils.LocaleUtils
-
+import com.helly.psaimmotool.update.*
+import com.helly.psaimmotool.utils.*
 import androidx.preference.ListPreference
 
 
@@ -31,7 +28,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             UiUpdater.setAutoScrollEnabled(requireContext(), newValue as Boolean)
             true
         }
-
+        findPreference<Preference>("edit_vehicles")?.setOnPreferenceClickListener {
+            startActivity(Intent(requireContext(), VehicleEditorActivity::class.java))
+            true
+        }
         // Theme selector
         val themePref = findPreference<ListPreference>("theme_selector")
         themePref?.setOnPreferenceChangeListener { _, newValue ->

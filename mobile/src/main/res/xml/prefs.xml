@@ -15,7 +15,14 @@
         android:summary="@string/settings_vehicle_editor_summary" />
 
 </PreferenceCategory>
-
+    <PreferenceCategory android:title="@string/pref_title_theme">
+        <Preference
+            android:key="theme_selector"
+            android:title="@string/theme_light" />
+        <Preference
+            android:key="theme_selector"
+            android:title="@string/theme_dark" />
+    </PreferenceCategory>
 <PreferenceCategory android:title="@string/pref_title_language">
     <Preference
         android:key="lang_fr"
