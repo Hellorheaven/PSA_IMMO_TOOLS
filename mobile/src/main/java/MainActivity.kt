@@ -19,6 +19,7 @@ import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 import androidx.core.view.isVisible
 import com.helly.psaimmotool.modules.*
@@ -182,6 +183,10 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(android.R.string.cancel, null)
             .show()
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN)
+            == PackageManager.PERMISSION_GRANTED) {
+            bluetoothAdapter?.startDiscovery()
+        }
         bluetoothAdapter?.startDiscovery()
     }
 
