@@ -210,5 +210,7 @@
     <string name="settings_vehicle_editor_summary">Add or edit supported vehicles</string>
     <string name="settings_category_general">General</string>
     <string name="settings_category_app">Application</string>
+    <string name="permission_bt_required">Bluetooth access permission is required. Please enable it in the settings.</string>
+
 
 </resources>

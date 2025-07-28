@@ -213,5 +213,6 @@
     <string name="settings_vehicle_editor_summary">Ajouter ou modifier les véhicules pris en charge</string>
     <string name="settings_category_general">Général</string>
     <string name="settings_category_app">Application</string>
+    <string name="permission_bt_required">Le Bluetooth nécessite l\'autorisation d\'accès. Activez-la dans les paramètres.</string>
 
 </resources>

@@ -58,10 +58,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.43">
+    <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.45">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/version.properties" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/version.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -858,7 +860,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753714816553</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="version 2.1.45">
+      <option name="closed" value="true" />
+      <created>1753715889441</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1753715889441</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -884,7 +894,8 @@
     <MESSAGE value="version 2.1.41" />
     <MESSAGE value="version 2.1.42" />
     <MESSAGE value="version 2.1.43" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 2.1.43" />
+    <MESSAGE value="version 2.1.45" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 2.1.45" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
