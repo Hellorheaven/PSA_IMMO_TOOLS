@@ -1,10 +1,9 @@
-// MainActivity.kt (corrigé)
 package com.helly.psaimmotool
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.*
@@ -45,9 +44,8 @@ class MainActivity : AppCompatActivity() {
     private var currentModule: BaseModule? = null
     private var currentModuleName: String = ""
 
-    @SuppressLint("ServiceCast")
-    val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-    val bluetoothAdapter = bluetoothManager.adapter
+    private lateinit var bluetoothManager: BluetoothManager
+    private var bluetoothAdapter: BluetoothAdapter? = null
     private val bluetoothDevices = mutableListOf<BluetoothDevice>()
 
 
@@ -72,6 +70,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bluetoothAdapter = bluetoothManager.adapter
         setContentView(R.layout.activity_main)
 
         bindViews()
