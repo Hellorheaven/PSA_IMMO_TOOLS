@@ -16,21 +16,23 @@
 
 </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_title_theme">
-        <Preference
+        <ListPreference
             android:key="theme_selector"
-            android:title="@string/theme_light" />
-        <Preference
-            android:key="theme_selector"
-            android:title="@string/theme_dark" />
+            android:title="@string/pref_title_theme"
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_values"
+            android:defaultValue="light"
+            android:summary="%s" />
     </PreferenceCategory>
-<PreferenceCategory android:title="@string/pref_title_language">
-    <Preference
-        android:key="lang_fr"
-        android:title="@string/lang_fr" />
-    <Preference
-        android:key="lang_en"
-        android:title="@string/lang_en" />
-</PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_title_language">
+        <ListPreference
+            android:key="language_selector"
+            android:title="@string/pref_title_language"
+            android:entries="@array/lang_entries"
+            android:entryValues="@array/lang_values"
+            android:defaultValue="fr"
+            android:summary="%s" />
+    </PreferenceCategory>
 
 <PreferenceCategory android:title="@string/category_update">
     <Preference

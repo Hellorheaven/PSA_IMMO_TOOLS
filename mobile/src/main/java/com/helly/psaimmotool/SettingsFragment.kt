@@ -18,7 +18,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.prefs, rootKey)
 
-        findPreference<Preference>("pref_vehicle_editor")?.setOnPreferenceClickListener {
+        findPreference<Preference>("vehicle_editor")?.setOnPreferenceClickListener {
             startActivity(Intent(requireContext(), VehicleEditorActivity::class.java))
             true
         }
@@ -28,10 +28,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             UiUpdater.setAutoScrollEnabled(requireContext(), newValue as Boolean)
             true
         }
-        findPreference<Preference>("edit_vehicles")?.setOnPreferenceClickListener {
-            startActivity(Intent(requireContext(), VehicleEditorActivity::class.java))
-            true
-        }
+
         // Theme selector
         val themePref = findPreference<ListPreference>("theme_selector")
         themePref?.setOnPreferenceChangeListener { _, newValue ->
