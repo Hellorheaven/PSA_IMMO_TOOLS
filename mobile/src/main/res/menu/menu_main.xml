@@ -1,4 +1,5 @@
-<menu xmlns:tools="http://schemas.android.com/tools"
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:ignore="ExtraText">
 
@@ -6,28 +7,28 @@
     <item
         android:id="@+id/menu_select_vehicle"
         android:title="@string/select_vehicle"
-    android:icon="@drawable/ic_car"
-        android:showAsAction="never" />
+        android:icon="@drawable/ic_car"
+        app:showAsAction="never" />
 
     <!-- Sélection du module -->
     <item
         android:id="@+id/menu_select_module"
         android:title="@string/select_module"
     android:icon="@drawable/ic_module"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
     <!-- Paramètres -->
     <item
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings"
     android:icon="@drawable/ic_settings"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
     <!-- Quitter -->
     <item
         android:id="@+id/menu_quit"
         android:title="@string/menu_quit"
      android:icon="@drawable/ic_exit"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
 </menu>
