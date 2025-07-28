@@ -4,49 +4,41 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.widget.TextView
 import androidx.preference.PreferenceManager
+import com.helly.psaimmotool.R
 
 object UiUpdater {
 
-    private const val KEY_AUTO_SCROLL = "auto_scroll_enabled"
-
     private var statusText: TextView? = null
     private var outputText: TextView? = null
+
+    private const val KEY_AUTO_SCROLL = "auto_scroll_enabled"
 
     fun init(statusView: TextView, outputView: TextView) {
         statusText = statusView
         outputText = outputView
     }
 
-    fun appendLog(outputView: TextView?, message: String) {
-        outputView?.append("$message\n")
+
+
+    fun appendLog(outputView: TextView?,message: String) {
+        outputText?.append("$message\n")
+        autoScrollIfEnabled()
     }
 
     fun appendLog(message: String) {
-        appendLog(outputText, message)
-    }
-
-    fun clearLog(outputView: TextView?) {
-        outputView?.text = ""
+        outputText?.append("$message\n")
+        autoScrollIfEnabled()
     }
 
     fun clearLog() {
-        clearLog(outputText)
-    }
-
-    fun setConnectedStatus(
-        statusView: TextView?,
-        outputView: TextView?,
-        status: String,
-        module: String
-    ) {
-        statusView?.text = status
-        if (module.isNotBlank()) {
-            appendLog(outputView, "📡 $status")
-        }
+        outputText?.text = ""
     }
 
     fun setConnectedStatus(status: String, module: String) {
-        setConnectedStatus(statusText, outputText, status, module)
+        statusText?.text = status
+        if (module.isNotBlank()) {
+            appendLog("📡 $status")
+        }
     }
 
     fun setAutoScrollEnabled(context: Context, enabled: Boolean) {
@@ -57,5 +49,10 @@ object UiUpdater {
     fun isAutoScrollEnabled(context: Context): Boolean {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getBoolean(KEY_AUTO_SCROLL, true)
+    }
+
+    private fun autoScrollIfEnabled() {
+        // Peut être enrichi pour scroll automatique
+        // Exemple : scrollView.fullScroll(View.FOCUS_DOWN)
     }
 }

@@ -26,26 +26,35 @@ object LocaleUtils {
 //        activity.startActivity(refresh)
 //        activity.finish()
 //    }
-fun setTheme(mode: String) {
-    when (mode) {
+
+
+    fun setTheme(activity: Activity, themeValue: String) {
+    when (themeValue) {
         "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         "system" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 }
-    fun setLocaleAndRestart(activity: Activity, languageCode: String) {
-        val locale = Locale(languageCode)
+    /**
+     * Change the app locale and restart the activity to apply the new locale.
+     *
+     * @param activity The activity to restart.
+     * @param langCode The language code to set (e.g., "en", "fr").
+     */
+
+    fun setLocaleAndRestart(activity: Activity, langCode: String) {
+        val locale = Locale(langCode)
         Locale.setDefault(locale)
 
-        val config = activity.resources.configuration
+        val config = Configuration()
         config.setLocale(locale)
+        activity.baseContext.resources.updateConfiguration(config, activity.baseContext.resources.displayMetrics)
 
-        @Suppress("DEPRECATION")
-        activity.resources.updateConfiguration(config, activity.resources.displayMetrics)
-
-        // Redémarre sans NEW_TASK
-        val intent = activity.intent
-        activity.finish()
+        val intent = Intent(activity, activity.javaClass)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         activity.startActivity(intent)
+        activity.finish()
     }
+
+
 }

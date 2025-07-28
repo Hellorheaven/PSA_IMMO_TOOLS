@@ -1,4 +1,3 @@
-// app/src/main/java/com/helly/psaimmotool/ui/DiagnosticsFragment.kt
 package com.helly.psaimmotool.ui
 
 import android.Manifest
@@ -10,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -45,10 +45,11 @@ class DiagnosticsFragment : Fragment() {
     private val bluetoothAdapter: BluetoothAdapter? by lazy { BluetoothAdapter.getDefaultAdapter() }
 
     private val bluetoothReceiver = object : BroadcastReceiver() {
+        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == BluetoothDevice.ACTION_FOUND) {
                 val device: BluetoothDevice? =
-                    intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+                    intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE, BluetoothDevice::class.java)
                 if (device != null && !bluetoothDevices.contains(device)) {
                     bluetoothDevices.add(device)
                     val names = bluetoothDevices.map { it.name ?: it.address }
@@ -62,9 +63,28 @@ class DiagnosticsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ContextProvider.init(requireContext().applicationContext)
+        setupButtons()
         DiagnosticRecorder.clear()
+        UiUpdater.init(statusText, outputText)
+        updateVehicleInfoDisplay()
         requireContext().registerReceiver(bluetoothReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(
+                    Manifest.permission.BLUETOOTH_CONNECT,
+                    Manifest.permission.BLUETOOTH_SCAN
+                ),
+                REQ_BT_PERMS
+            )
+        }
+
+        val filter = IntentFilter().apply {
+            addAction(BluetoothDevice.ACTION_FOUND)
+            addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
+        }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -219,6 +239,28 @@ class DiagnosticsFragment : Fragment() {
         Toast.makeText(requireContext(), getString(R.string.bluetooth_scanning), Toast.LENGTH_SHORT).show()
     }
 
+
+
+    private fun updateVehicleInfoDisplay() {
+        val (brand, model, year) = VehicleManager.selectedVehicle
+        val capabilities = VehicleCapabilities.getCapabilities(brand, model)
+        val algoAvailable = PsaKeyCalculator.hasKeyAlgoFor(VehicleManager.selectedVehicle)
+        val capText = buildString {
+            append("$brand $model $year\n")
+            if (capabilities != null) {
+                append("CAN: ${capabilities.supportsCan}, ")
+                append("OBD2: ${capabilities.supportsObd2}, ")
+                append("K-Line: ${capabilities.supportsKLine}\n")
+                append("Modules: ${capabilities.compatibleModules.joinToString(", ")}\n")
+            } else {
+                append(getString(R.string.no_key_algo_for_vehicle) + "\n")
+            }
+            append(getString(if (algoAvailable) R.string.pin_algo_present else R.string.pin_algo_absent))
+        }
+        statusText.text = capText
+        Toast.makeText(requireContext(), capText, Toast.LENGTH_LONG).show()
+    }
+
     private fun generateDiagnosticReport() {
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
         val safeDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
@@ -227,7 +269,8 @@ class DiagnosticsFragment : Fragment() {
         val vehicle = "$brand $model $year"
         val logs = outputText.text.toString()
         val module = currentModuleName.ifBlank { getString(R.string.module_unknown) }
-        val connectionStatus = if (isConnected) getString(R.string.connection_success) else getString(R.string.connection_failed)
+        val connectionStatus =
+            if (isConnected) getString(R.string.connection_success) else getString(R.string.connection_failed)
 
         val capabilities = VehicleCapabilities.getCapabilities(brand, model)
         val supportsCan = capabilities?.supportsCan?.toString() ?: "N/A"
@@ -264,32 +307,17 @@ class DiagnosticsFragment : Fragment() {
         try {
             val dir = File(requireContext().getExternalFilesDir(null), "PSAImmoTool")
             if (!dir.exists()) dir.mkdirs()
+
             val fileName = "rapport_${safeDate}_${brand}_${model}.txt"
             val file = File(dir, fileName)
             FileOutputStream(file).use { it.write(report.toString().toByteArray()) }
-            UiUpdater.appendLog(getString(R.string.report_saved, file.absolutePath))
+            UiUpdater.appendLog(outputText, getString(R.string.report_saved, file.absolutePath))
         } catch (e: Exception) {
-            UiUpdater.appendLog(getString(R.string.report_error, e.message ?: ""))
+            UiUpdater.appendLog(outputText, getString(R.string.report_error, e.message ?: ""))
         }
     }
-
-    private fun updateVehicleInfoDisplay() {
-        val (brand, model, year) = VehicleManager.selectedVehicle
-        val capabilities = VehicleCapabilities.getCapabilities(brand, model)
-        val algoAvailable = PsaKeyCalculator.hasKeyAlgoFor(VehicleManager.selectedVehicle)
-        val capText = buildString {
-            append("$brand $model $year\n")
-            if (capabilities != null) {
-                append("CAN: ${capabilities.supportsCan}, ")
-                append("OBD2: ${capabilities.supportsObd2}, ")
-                append("K-Line: ${capabilities.supportsKLine}\n")
-                append("Modules: ${capabilities.compatibleModules.joinToString(", ")}\n")
-            } else {
-                append(getString(R.string.no_key_algo_for_vehicle) + "\n")
-            }
-            append(getString(if (algoAvailable) R.string.pin_algo_present else R.string.pin_algo_absent))
-        }
-        statusText.text = capText
-        Toast.makeText(requireContext(), capText, Toast.LENGTH_LONG).show()
+    companion object {
+        const val ACTION_USB_PERMISSION = "com.helly.psaimmotool.USB_PERMISSION"
+        const val REQ_BT_PERMS = 1001
     }
 }

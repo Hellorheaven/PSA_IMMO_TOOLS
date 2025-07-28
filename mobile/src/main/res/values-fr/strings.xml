@@ -208,5 +208,8 @@
     <string name="setting_check_update">Vérifier les mises à jour</string>
     <string name="setting_check_update_summary">Vérifie si une nouvelle version est disponible</string>
     <string name="setting_current_version">Version actuelle</string>
+    <string name="settings_vehicle_editor_summary">Ajouter ou modifier les véhicules pris en charge</string>
+    <string name="settings_category_general">Général</string>
+    <string name="settings_category_app">Application</string>
 
 </resources>

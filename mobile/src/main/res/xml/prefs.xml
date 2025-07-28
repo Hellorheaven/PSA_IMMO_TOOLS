@@ -1,39 +1,40 @@
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:key="pref_theme"
-        android:title="@string/pref_title_theme"
-        android:entries="@array/theme_entries"
-        android:entryValues="@array/theme_values"
-        android:defaultValue="system" />
-
-    <ListPreference
-        android:key="pref_language"
-        android:title="@string/pref_title_language"
-        android:entries="@array/lang_entries"
-        android:entryValues="@array/lang_values"
-        android:defaultValue="en" />
-
+<PreferenceCategory android:title="@string/settings_category_general">
     <SwitchPreferenceCompat
-        android:key="pref_auto_scroll"
-        android:title="@string/pref_title_autoscroll"
+        android:key="auto_scroll_enabled"
+        android:title="@string/pref_autoscroll_title"
         android:defaultValue="true" />
+</PreferenceCategory>
+
+<PreferenceCategory android:title="@string/settings_category_app">
+    <Preference
+        android:key="vehicle_editor"
+        android:title="@string/pref_title_vehicle_editor"
+        android:summary="@string/settings_vehicle_editor_summary" />
+
+</PreferenceCategory>
+
+<PreferenceCategory android:title="@string/pref_title_language">
+    <Preference
+        android:key="lang_fr"
+        android:title="@string/lang_fr" />
+    <Preference
+        android:key="lang_en"
+        android:title="@string/lang_en" />
+</PreferenceCategory>
+
+<PreferenceCategory android:title="@string/category_update">
+    <Preference
+        android:key="pref_check_update"
+        android:title="@string/pref_title_update"
+        android:summary="@string/setting_check_update_summary" />
 
     <Preference
-        android:key="pref_vehicle_editor"
-        android:title="@string/pref_title_vehicle_editor" />
-
-
-    <PreferenceCategory android:title="@string/category_update">
-        <Preference
-            android:key="pref_check_update"
-            android:title="@string/pref_title_update"
-            android:summary="@string/setting_check_update_summary" />
-
-        <Preference
-            android:key="pref_version"
-            android:title="@string/pref_version_summary"
-            android:summary="..." />
-    </PreferenceCategory>
+        android:key="pref_version"
+        android:title="@string/pref_version_summary"
+        android:summary="..." />
+</PreferenceCategory>
 
 </PreferenceScreen>

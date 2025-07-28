@@ -2,9 +2,11 @@
 package com.helly.psaimmotool
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.content.*
 import android.content.pm.PackageManager
 import android.os.Build
@@ -13,6 +15,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
@@ -22,6 +25,7 @@ import com.helly.psaimmotool.modules.*
 import com.helly.psaimmotool.utils.*
 import java.util.*
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var moduleSelector: Spinner
@@ -41,12 +45,17 @@ class MainActivity : AppCompatActivity() {
     private var currentModule: BaseModule? = null
     private var currentModuleName: String = ""
 
-    private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+    @SuppressLint("ServiceCast")
+    val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+    val bluetoothAdapter = bluetoothManager.adapter
     private val bluetoothDevices = mutableListOf<BluetoothDevice>()
+
+
     private lateinit var btNamesAdapter: ArrayAdapter<String>
     private var btDialog: AlertDialog? = null
 
     private val bluetoothReceiver = object : BroadcastReceiver() {
+        @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
                 BluetoothDevice.ACTION_FOUND -> {
@@ -121,7 +130,7 @@ class MainActivity : AppCompatActivity() {
 
         AlertDialog.Builder(this)
             .setTitle(R.string.select_module)
-            .setItems(modules.toTypedArray()) { _, which ->
+            .setItems(modules.toTypedArray()) @androidx.annotation.RequiresPermission(android.Manifest.permission.BLUETOOTH_SCAN) { _, which ->
                 val selected = modules[which]
                 currentModuleName = selected
 
@@ -137,6 +146,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
     private fun openBluetoothLivePicker() {
         bluetoothDevices.clear()
         val listView = ListView(this)

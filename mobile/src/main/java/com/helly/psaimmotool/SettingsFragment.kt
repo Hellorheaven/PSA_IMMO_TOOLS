@@ -11,9 +11,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.helly.psaimmotool.utils.LocaleUtils
 import com.helly.psaimmotool.utils.VehicleManager
+import androidx.preference.ListPreference
+
+
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
+
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.prefs, rootKey)
 
@@ -21,26 +26,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
             startActivity(Intent(requireContext(), VehicleEditorActivity::class.java))
             true
         }
-
-        findPreference<androidx.preference.Preference>("pref_theme_light")?.setOnPreferenceClickListener {
-            LocaleUtils.setTheme("light")
+        // Sauvegarde du toggle autoscroll
+        val autoScrollPref = findPreference<Preference>("pref_auto_scroll")
+        autoScrollPref?.setOnPreferenceChangeListener { _, newValue ->
+            UiUpdater.setAutoScrollEnabled(requireContext(), newValue as Boolean)
             true
         }
 
-        findPreference<androidx.preference.Preference>("pref_theme_dark")?.setOnPreferenceClickListener {
-            LocaleUtils.setTheme("dark")
+        // Theme selector
+        val themePref = findPreference<ListPreference>("theme_selector")
+        themePref?.setOnPreferenceChangeListener { _, newValue ->
+            LocaleUtils.setTheme(requireActivity(), newValue as String)
             true
         }
 
-        findPreference<androidx.preference.Preference>("pref_language_fr")?.setOnPreferenceClickListener {
-            LocaleUtils.setLocaleAndRestart(requireActivity(), "fr")
+        // Language selector
+        val langPref = findPreference<ListPreference>("language_selector")
+        langPref?.setOnPreferenceChangeListener { _, newValue ->
+            LocaleUtils.setLocaleAndRestart(requireActivity(), newValue as String)
             true
         }
 
-        findPreference<androidx.preference.Preference>("pref_language_en")?.setOnPreferenceClickListener {
-            LocaleUtils.setLocaleAndRestart(requireActivity(), "en")
-            true
-        }
         findPreference<Preference>("pref_update_app")?.setOnPreferenceClickListener {
             UpdateManager.checkForUpdate(requireContext())
             true
@@ -56,12 +62,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("pref_version")?.summary =
             "v${BuildConfig.VERSION_NAME} (Build ${BuildConfig.VERSION_CODE})"
 
-        // Sauvegarde du toggle autoscroll
-        val autoScrollPref = findPreference<Preference>("pref_auto_scroll")
-        autoScrollPref?.setOnPreferenceChangeListener { _, newValue ->
-            UiUpdater.setAutoScrollEnabled(requireContext(), newValue as Boolean)
-            true
-        }
+
     }
 }
 

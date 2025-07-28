@@ -205,5 +205,8 @@
     <string name="setting_check_update">Check for update</string>
     <string name="setting_check_update_summary">Verify if a newer version is available</string>
     <string name="setting_current_version">Current version</string>
+    <string name="settings_vehicle_editor_summary">Add or edit supported vehicles</string>
+    <string name="settings_category_general">General</string>
+    <string name="settings_category_app">Application</string>
 
 </resources>
