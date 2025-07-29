@@ -8,7 +8,6 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.*
 import android.content.pm.PackageManager
-
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -17,14 +16,11 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
-
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-
 import androidx.core.view.isVisible
 import com.helly.psaimmotool.modules.*
 import com.helly.psaimmotool.utils.*
-
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -50,7 +46,6 @@ class MainActivity : AppCompatActivity() {
     private var bluetoothAdapter: BluetoothAdapter? = null
     private val bluetoothDevices = mutableListOf<BluetoothDevice>()
 
-
     private lateinit var btNamesAdapter: ArrayAdapter<String>
     private var btDialog: AlertDialog? = null
 
@@ -59,18 +54,21 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
                 BluetoothDevice.ACTION_FOUND -> {
-                    val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
+                    val device =
+                        intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
                     if (device != null && bluetoothDevices.none { it.address == device.address }) {
                         bluetoothDevices.add(device)
                         btNamesAdapter.add(device.name ?: device.address ?: getString(R.string.unknown_device))
                         btNamesAdapter.notifyDataSetChanged()
                     }
                 }
+
                 BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
-                    context?.let {Toast.makeText(context, R.string.bt_discovery_started, Toast.LENGTH_SHORT).show()}
+                    Toast.makeText(context, R.string.bt_discovery_started, Toast.LENGTH_SHORT).show()
                 }
+
                 BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
-                    context?.let {Toast.makeText(context, R.string.bt_discovery_finished, Toast.LENGTH_SHORT).show()}
+                    Toast.makeText(context, R.string.bt_discovery_finished, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -80,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
+
         setContentView(R.layout.activity_main)
 
         bindViews()
@@ -90,12 +89,16 @@ class MainActivity : AppCompatActivity() {
         UiUpdater.init(statusText, outputText)
         ContextProvider.init(applicationContext)
 
+        // Demande de permission pour Android 12+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            ActivityCompat.requestPermissions(this,
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(
                     Manifest.permission.BLUETOOTH_SCAN,
                     Manifest.permission.BLUETOOTH_CONNECT
-                ), REQ_BT_PERMS)
+                ),
+                REQ_BT_PERMS
+            )
         }
 
         val filter = IntentFilter().apply {
@@ -121,15 +124,19 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_select_vehicle -> {
                 showVehicleSelectionDialog(); true
             }
+
             R.id.menu_select_module -> {
                 showModuleSelectionDialog(); true
             }
+
             R.id.menu_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java)); true
             }
+
             R.id.menu_quit -> {
                 finish(); true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -140,20 +147,26 @@ class MainActivity : AppCompatActivity() {
 
         AlertDialog.Builder(this)
             .setTitle(R.string.select_module)
-            .setItems(modules.toTypedArray()) @androidx.annotation.RequiresPermission(android.Manifest.permission.BLUETOOTH_SCAN) { _, which ->
+            .setItems(modules.toTypedArray()) { _, which ->
                 val selected = modules[which]
                 currentModuleName = selected
 
                 if (selected == getString(R.string.module_obd2_bluetooth)) {
                     currentModule = null
                     updateUiVisibilityForModule()
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.BLUETOOTH_SCAN
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
                         openBluetoothLivePicker()
                     } else {
-                        Toast.makeText(this, R.string.permission_bt_required, Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this,
+                            R.string.permission_bt_required,
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
-
-                    openBluetoothLivePicker()
                 } else {
                     buildModuleForName(selected)
                     updateUiVisibilityForModule()
@@ -166,10 +179,11 @@ class MainActivity : AppCompatActivity() {
     private fun openBluetoothLivePicker() {
         bluetoothAdapter?.cancelDiscovery()
         bluetoothDevices.clear()
+
         val listView = ListView(this)
         btNamesAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
-        btNamesAdapter.clear()
         listView.adapter = btNamesAdapter
+
         listView.setOnItemClickListener { _, _, position, _ ->
             val device = bluetoothDevices[position]
             btDialog?.dismiss()
@@ -183,11 +197,13 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(android.R.string.cancel, null)
             .show()
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN)
-            == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_SCAN
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             bluetoothAdapter?.startDiscovery()
         }
-        bluetoothAdapter?.startDiscovery()
     }
 
     private fun showVehicleSelectionDialog() {
@@ -235,10 +251,11 @@ class MainActivity : AppCompatActivity() {
             ReportGenerator.generate(this, currentModuleName, outputText.text.toString())
         }
     }
+
     private fun buildModuleForName(name: String) {
         currentModule = when (name) {
             getString(R.string.module_obd2_usb) -> Obd2UsbModule(this)
-            getString(R.string.module_obd2_bluetooth) -> null // handled after BT selection
+            getString(R.string.module_obd2_bluetooth) -> null
             getString(R.string.module_kline_usb) -> KLineUsbModule(this)
             getString(R.string.module_canbus) -> CanBusModule(this)
             getString(R.string.module_canbus_uart) -> CanBusUartModule(this)
@@ -246,6 +263,7 @@ class MainActivity : AppCompatActivity() {
             else -> null
         }
     }
+
     private fun bindViews() {
         moduleSelector = findViewById(R.id.moduleSelector)
         bluetoothDeviceSpinner = findViewById(R.id.bluetoothDeviceSpinner)
