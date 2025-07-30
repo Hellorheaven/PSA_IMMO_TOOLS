@@ -60,13 +60,12 @@
   <component name="ChangeListManager">
     <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.50">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/release/baselineProfiles/0/mobile-release.dm" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/baselineProfiles/0/mobile-release.dm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/release/baselineProfiles/1/mobile-release.dm" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/baselineProfiles/1/mobile-release.dm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/release/mobile-release.apk" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/mobile-release.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/release/output-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/output-metadata.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/PermissionUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/PermissionUtils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/version.properties" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/version.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -888,7 +887,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753717388784</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="version 2.1.50">
+      <option name="closed" value="true" />
+      <created>1753790149208</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1753790149208</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -935,7 +942,7 @@
       <map>
         <entry key="com.helly.psaimmotool">
           <value>
-            <CheckInfo lastCheckTimestamp="1753778936300" />
+            <CheckInfo lastCheckTimestamp="1753867884317" />
           </value>
         </entry>
         <entry key="com.helly.psaimmotool.automotive">
@@ -950,7 +957,7 @@
         </entry>
         <entry key="com.helly.psaimmotool.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1753778936302" />
+            <CheckInfo lastCheckTimestamp="1753867884317" />
           </value>
         </entry>
       </map>
