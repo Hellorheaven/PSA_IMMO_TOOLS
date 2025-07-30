@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 20155,
-      "versionName": "2.1.55",
+      "versionCode": 20157,
+      "versionName": "2.1.57",
       "outputFile": "mobile-release.apk"
     }
   ],
