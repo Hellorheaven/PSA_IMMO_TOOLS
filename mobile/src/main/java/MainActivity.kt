@@ -1,14 +1,13 @@
 package com.helly.psaimmotool
 
 import android.Manifest
-import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.*
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -26,8 +25,7 @@ import com.helly.psaimmotool.utils.*
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var moduleSelector: Spinner
-    private lateinit var bluetoothDeviceSpinner: Spinner
+    // UI components
     private lateinit var connectButton: Button
     private lateinit var requestVinButton: Button
     private lateinit var requestPinButton: Button
@@ -46,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bluetoothManager: BluetoothManager
     private var bluetoothAdapter: BluetoothAdapter? = null
     private val bluetoothDevices = mutableListOf<BluetoothDevice>()
-
     private lateinit var btNamesAdapter: ArrayAdapter<String>
     private var btDialog: AlertDialog? = null
 
@@ -63,14 +60,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
-                    context?.let {
-                        Toast.makeText(context, R.string.bt_discovery_started, Toast.LENGTH_SHORT).show()
-                    }
+                    context?.let { Toast.makeText(it, R.string.bt_discovery_started, Toast.LENGTH_SHORT).show() }
                 }
                 BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
-                    context?.let {
-                        Toast.makeText(context, R.string.bt_discovery_finished, Toast.LENGTH_SHORT).show()
-                    }
+                    context?.let { Toast.makeText(it, R.string.bt_discovery_finished, Toast.LENGTH_SHORT).show() }
                 }
             }
         }
@@ -78,29 +71,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
         bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
-        setContentView(R.layout.activity_main)
+
+        checkAndRequestAllPermissions(this)
 
         bindViews()
         initToolbar()
-        forceHideSpinners()
         setupButtons()
-
         UiUpdater.init(statusText, outputText)
         ContextProvider.init(applicationContext)
 
-        if (!PermissionUtils.hasBluetoothScanPermission(this) || !PermissionUtils.hasBluetoothPermission(this)) {
-            PermissionUtils.requestBluetoothScanPermission(this, REQ_BT_PERMS)
-            PermissionUtils.requestBluetoothPermission(this, REQ_BT_PERMS)
-        }
-
-        val filter = IntentFilter().apply {
+        registerReceiver(bluetoothReceiver, IntentFilter().apply {
             addAction(BluetoothDevice.ACTION_FOUND)
             addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
             addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
-        }
-        registerReceiver(bluetoothReceiver, filter)
+        })
     }
 
     override fun onDestroy() {
@@ -131,38 +119,66 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkAndRequestAllPermissions(activity: Activity) {
+        val permissionsToRequest = mutableListOf<String>()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!PermissionUtils.hasStoragePermission(activity)) {
+                permissionsToRequest.add(Manifest.permission.READ_MEDIA_IMAGES)
+            }
+        } else {
+            if (!PermissionUtils.hasStoragePermission(activity)) {
+                permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!PermissionUtils.hasBluetoothPermission(activity)) {
+                permissionsToRequest.add(Manifest.permission.BLUETOOTH_CONNECT)
+            }
+            if (!PermissionUtils.hasBluetoothScanPermission(activity)) {
+                permissionsToRequest.add(Manifest.permission.BLUETOOTH_SCAN)
+            }
+        }
+
+        if (!PermissionUtils.hasLocationPermission(activity)) {
+            permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        if (permissionsToRequest.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                activity,
+                permissionsToRequest.toTypedArray(),
+                2001
+            )
+        }
+    }
+
     private fun showModuleSelectionDialog() {
         val modules = VehicleCapabilities.getCompatibleModules()
         if (modules.isEmpty()) return
 
         AlertDialog.Builder(this)
             .setTitle(R.string.select_module)
-            .setItems(modules.toTypedArray()) @androidx.annotation.RequiresPermission(android.Manifest.permission.BLUETOOTH_SCAN) { _, which ->
+            .setItems(modules.toTypedArray()) { _, which ->
                 val selected = modules[which]
                 currentModuleName = selected
 
                 if (selected == getString(R.string.module_obd2_bluetooth)) {
                     currentModule = null
                     updateUiVisibilityForModule()
-
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
-                        openBluetoothLivePicker()
-                    } else {
-                        Toast.makeText(this, R.string.permission_bt_required, Toast.LENGTH_LONG).show()
-                    }
+                    openBluetoothLivePicker()
                 } else {
                     buildModuleForName(selected)
                     updateUiVisibilityForModule()
                 }
-            }
-            .show()
+            }.show()
     }
 
     @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
     private fun openBluetoothLivePicker() {
         bluetoothAdapter?.cancelDiscovery()
         bluetoothDevices.clear()
-
         val listView = ListView(this)
         btNamesAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
         btNamesAdapter.clear()
@@ -181,20 +197,7 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(android.R.string.cancel, null)
             .show()
 
-        if (!isLocationEnabled()) {
-            Toast.makeText(this, R.string.enable_location, Toast.LENGTH_LONG).show()
-            return
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
-            bluetoothAdapter?.startDiscovery()
-        }
-    }
-
-    private fun isLocationEnabled(): Boolean {
-        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        bluetoothAdapter?.startDiscovery()
     }
 
     private fun showVehicleSelectionDialog() {
@@ -256,8 +259,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindViews() {
-        moduleSelector = findViewById(R.id.moduleSelector)
-        bluetoothDeviceSpinner = findViewById(R.id.bluetoothDeviceSpinner)
         connectButton = findViewById(R.id.connectButton)
         requestVinButton = findViewById(R.id.requestVinButton)
         requestPinButton = findViewById(R.id.requestPinButton)
@@ -274,11 +275,6 @@ class MainActivity : AppCompatActivity() {
     private fun initToolbar() {
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.mainToolbar)
         setSupportActionBar(toolbar)
-    }
-
-    private fun forceHideSpinners() {
-        moduleSelector.visibility = View.GONE
-        bluetoothDeviceSpinner.visibility = View.GONE
     }
 
     companion object {
