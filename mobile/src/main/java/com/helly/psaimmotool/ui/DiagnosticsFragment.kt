@@ -51,8 +51,10 @@ class DiagnosticsFragment : Fragment() {
             if (intent?.action == BluetoothDevice.ACTION_FOUND) {
                 val device: BluetoothDevice? =
                     intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE, BluetoothDevice::class.java)
+
                 if (device != null && !bluetoothDevices.contains(device)) {
                     bluetoothDevices.add(device)
+
                     val names = bluetoothDevices.map { it.name ?: it.address }
                     bluetoothDeviceSpinner.adapter =
                         ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, names)

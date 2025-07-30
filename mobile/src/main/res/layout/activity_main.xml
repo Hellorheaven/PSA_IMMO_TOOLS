@@ -31,12 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Sélecteur de module -->
-            <Spinner
-                android:id="@+id/moduleSelector"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp" />
 
             <!-- Sélecteur Bluetooth -->
             <Spinner
