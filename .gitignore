@@ -4,3 +4,10 @@
 /core/build/
 *.hprof
 /.idea/
+/mobile/build/generated/
+/mobile/build/intermediates/
+/mobile/build/kotlin/
+/mobile/build/kotlinToolingMetadata/
+/mobile/build/outputs/logs/
+/mobile/build/outputs/sdk-dependencies/
+/mobile/build/tmp/
