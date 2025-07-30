@@ -58,16 +58,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.50">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/PermissionUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/helly/psaimmotool/utils/PermissionUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-en/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-fr/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/version.properties" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/version.properties" afterDir="false" />
-    </list>
+    <list default="true" id="6a0fe37c-c4c6-4288-95cb-7b4122668866" name="Changes" comment="version 2.1.56" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -895,7 +886,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753790149208</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="version 2.1.56">
+      <option name="closed" value="true" />
+      <created>1753869522680</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1753869522680</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -924,7 +923,8 @@
     <MESSAGE value="version 2.1.45" />
     <MESSAGE value="version 2.1.48" />
     <MESSAGE value="version 2.1.50" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 2.1.50" />
+    <MESSAGE value="version 2.1.56" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 2.1.56" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

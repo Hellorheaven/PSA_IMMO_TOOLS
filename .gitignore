@@ -2,5 +2,5 @@
 /.gradle/
 /build/
 /core/build/
-/mobile/build/
 *.hprof
+/.idea/
