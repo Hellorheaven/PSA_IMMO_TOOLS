@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 20180,
-      "versionName": "2.1.80",
+      "versionCode": 20184,
+      "versionName": "2.1.84",
       "outputFile": "mobile-release.apk"
     }
   ],
@@ -33,5 +33,5 @@
       ]
     }
   ],
-  "minSdkVersionForDexing": 21
+  "minSdkVersionForDexing": 26
 }

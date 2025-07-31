@@ -15,20 +15,21 @@
         app:title="@string/app_name"
         app:titleCentered="true"
         app:titleTextColor="@android:color/white"
+        app:popupTheme="@style/ThemeOverlay.PsaImmoTool.Toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Scroll pour la partie boutons -->
+    <!-- Scrollable content -->
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/buttonsScroll"
+        android:id="@+id/mainScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="16dp"
         android:fillViewport="true"
         android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@id/mainToolbar"
-        app:layout_constraintBottom_toTopOf="@id/logsCard"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -37,13 +38,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- Boutons -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/connectButton"
                 style="@style/Widget.PsaImmoTool.PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_connect"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/button_connect" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/requestVinButton"
@@ -51,7 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_request_vin"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/button_request_vin" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/requestPinButton"
@@ -59,7 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_request_pin"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/button_request_pin" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/startCanListenButton"
@@ -67,8 +72,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_start_can_listen"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/button_start_can_listen" />
 
+            <!-- Input Frame -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,45 +90,28 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Bouton envoyer trame -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sendFrameButton"
                 style="@style/Widget.PsaImmoTool.PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_send_frame"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/button_send_frame" />
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <!-- Card Logs -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/logsCard"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="12dp">
-
+            <!-- Section logs -->
             <TextView
                 android:id="@+id/statusText"
                 style="@style/Widget.PsaImmoTool.SectionTitle"
                 android:text="@string/status_disconnected"
+                android:paddingTop="24dp"
                 android:paddingBottom="8dp" />
 
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/logsScroll"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="200dp"
                 android:scrollbars="vertical">
 
                 <TextView
@@ -149,29 +139,32 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/button_export_logs" />
+                    android:text="@string/button_export_logs"
+                    android:contentDescription="@string/button_export_logs" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/clearLogsButton"
                     style="@style/Widget.PsaImmoTool.SecondaryButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:text="@string/button_clear_logs" />
+                    android:layout_weight="1"
+                    android:text="@string/button_clear_logs"
+                    android:contentDescription="@string/button_clear_logs" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/generateReportButton"
                     style="@style/Widget.PsaImmoTool.SecondaryButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:text="@string/button_generate_report" />
+                    android:layout_weight="1"
+                    android:text="@string/button_generate_report"
+                    android:contentDescription="@string/button_generate_report" />
 
             </LinearLayout>
 
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
