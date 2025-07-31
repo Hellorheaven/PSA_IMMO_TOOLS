@@ -215,6 +215,8 @@
     <string name="settings_category_app">Application</string>
     <string name="permission_bt_required">Le Bluetooth nécessite l\'autorisation d\'accès. Activez-la dans les paramètres.</string>
     <string name="enable_location">Veuillez activer la localisation pour détecter les périphériques Bluetooth.</string>
+    <string name="permission_denied">Certaines autorisations ont été refusées. L\'application pourrait ne pas fonctionner correctement.</string>
+
 
 
 

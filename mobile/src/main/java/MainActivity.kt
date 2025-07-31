@@ -25,7 +25,6 @@ import com.helly.psaimmotool.utils.*
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
-    // UI components
     private lateinit var connectButton: Button
     private lateinit var requestVinButton: Button
     private lateinit var requestPinButton: Button
@@ -77,7 +76,9 @@ class MainActivity : AppCompatActivity() {
         bluetoothAdapter = bluetoothManager.adapter
 
         checkAndRequestAllPermissions(this)
+    }
 
+    private fun onPermissionsGranted() {
         bindViews()
         initToolbar()
         setupButtons()
@@ -91,31 +92,14 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(bluetoothReceiver)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_select_vehicle -> {
-                showVehicleSelectionDialog(); true
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 2001) {
+            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                onPermissionsGranted()
+            } else {
+                Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show()
             }
-            R.id.menu_select_module -> {
-                showModuleSelectionDialog(); true
-            }
-            R.id.menu_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java)); true
-            }
-            R.id.menu_quit -> {
-                finish(); true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -146,11 +130,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (permissionsToRequest.isNotEmpty()) {
-            ActivityCompat.requestPermissions(
-                activity,
-                permissionsToRequest.toTypedArray(),
-                2001
-            )
+            ActivityCompat.requestPermissions(activity, permissionsToRequest.toTypedArray(), 2001)
+        } else {
+            onPermissionsGranted()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(bluetoothReceiver)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_select_vehicle -> { showVehicleSelectionDialog(); true }
+            R.id.menu_select_module -> { showModuleSelectionDialog(); true }
+            R.id.menu_settings -> { startActivity(Intent(this, SettingsActivity::class.java)); true }
+            R.id.menu_quit -> { finish(); true }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -168,7 +170,6 @@ class MainActivity : AppCompatActivity() {
                     currentModule = null
                     updateUiVisibilityForModule()
                     openBluetoothLivePicker()
-
                 } else {
                     buildModuleForName(selected)
                     updateUiVisibilityForModule()
@@ -176,30 +177,18 @@ class MainActivity : AppCompatActivity() {
             }.show()
     }
 
-
     private fun openBluetoothLivePicker() {
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BLUETOOTH_SCAN
-            ) != PackageManager.PERMISSION_GRANTED
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN)
+            != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            Toast.makeText(this, R.string.permission_bt_required, Toast.LENGTH_LONG).show()
             return
         }
+
         bluetoothAdapter?.cancelDiscovery()
-
-
         bluetoothDevices.clear()
         val listView = ListView(this)
         btNamesAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
-        btNamesAdapter.clear()
         listView.adapter = btNamesAdapter
 
         listView.setOnItemClickListener { _, _, position, _ ->
@@ -289,12 +278,12 @@ class MainActivity : AppCompatActivity() {
         statusText = findViewById(R.id.statusText)
         outputText = findViewById(R.id.outputText)
     }
-
+    
     private fun initToolbar() {
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.mainToolbar)
         setSupportActionBar(toolbar)
     }
-
+    
     companion object {
         const val REQ_BT_PERMS = 1001
     }
