@@ -64,7 +64,9 @@ class VehicleEditorActivity : Activity() {
             selectedModules.add(module)
             moduleListText.text = selectedModules.joinToString(", ")
         }
-
+        cancelButton.setOnClickListener {
+            finish() // ferme l’activité et revient à l’écran précédent
+        }
         saveButton.setOnClickListener {
             val brand = brandField.text.toString().trim()
             val model = modelField.text.toString().trim()

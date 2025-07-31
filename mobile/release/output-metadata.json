@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 20192,
-      "versionName": "2.1.92",
+      "versionCode": 20193,
+      "versionName": "2.1.93",
       "outputFile": "mobile-release.apk"
     }
   ],

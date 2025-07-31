@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="?attr/colorSurface"
     tools:context=".MainActivity">
 
-    <!-- Toolbar Material3 -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/mainToolbar"
+    <!-- AppBar avec Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:titleTextColor="?attr/colorOnPrimary"
-        app:title="@string/app_name" />
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="?attr/actionBarTheme">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mainToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:titleTextColor="?attr/colorOnPrimary"
+            app:title="@string/app_name" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Contenu principal défilant -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/mainScroll"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:orientation="vertical"
@@ -31,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Bluetooth Device Spinner (hidden by default) -->
             <Spinner
                 android:id="@+id/bluetoothDeviceSpinner"
                 android:layout_width="match_parent"
@@ -39,7 +49,6 @@
                 android:layout_marginBottom="8dp"
                 android:visibility="gone" />
 
-            <!-- Buttons with MaterialButton -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/connectButton"
                 android:layout_width="match_parent"
@@ -68,7 +77,6 @@
                 android:text="@string/button_start_can_listen"
                 android:layout_marginTop="8dp" />
 
-            <!-- Input Frame with TextInputLayout -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +97,6 @@
                 android:text="@string/button_send_frame"
                 android:layout_marginTop="8dp" />
 
-            <!-- Status Text -->
             <TextView
                 android:id="@+id/statusText"
                 android:layout_width="match_parent"
@@ -100,7 +107,6 @@
                 android:textStyle="bold"
                 android:textColor="?attr/colorError" />
 
-            <!-- Output Logs TextView -->
             <TextView
                 android:id="@+id/outputText"
                 android:layout_width="match_parent"
@@ -110,7 +116,6 @@
                 android:lineSpacingExtra="4dp"
                 android:textColor="?attr/colorOnSurface" />
 
-            <!-- Log management buttons -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/exportLogsButton"
                 android:layout_width="match_parent"
@@ -134,4 +139,4 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

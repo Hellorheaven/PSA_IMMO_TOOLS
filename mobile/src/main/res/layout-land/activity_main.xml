@@ -1,205 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_background"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="?attr/colorSurface"
+    tools:context=".MainActivity">
 
-    <!-- Toolbar --><com.google.android.material.appbar.MaterialToolbar
-    android:id="@+id/mainToolbar"
-    android:layout_width="0dp"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    app:title="@string/app_name"
-    app:titleCentered="true"
-    app:titleTextColor="@android:color/white"
-    app:popupTheme="@style/ThemeOverlay.PsaImmoTool.Toolbar"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
-
-
-    <!-- Guideline verticale à 40% -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline40"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4" />
+        android:fitsSystemWindows="true"
+        android:theme="?attr/actionBarTheme">
 
-    <!-- Zone boutons (gauche) -->
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/buttonsScroll"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="16dp"
-        android:fillViewport="true"
-        android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/mainToolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline40">
-
-        <LinearLayout
-            android:orientation="vertical"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mainToolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:titleTextColor="?attr/colorOnPrimary"
+            app:title="@string/app_name" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/connectButton"
-                style="@style/Widget.PsaImmoTool.PrimaryButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_connect"
-                android:layout_marginTop="8dp"
-                android:contentDescription="@string/button_connect" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/requestVinButton"
-                style="@style/Widget.PsaImmoTool.PrimaryButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_request_vin"
-                android:layout_marginTop="8dp"
-                android:contentDescription="@string/button_request_vin" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/requestPinButton"
-                style="@style/Widget.PsaImmoTool.PrimaryButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_request_pin"
-                android:layout_marginTop="8dp"
-                android:contentDescription="@string/button_request_pin" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/startCanListenButton"
-                style="@style/Widget.PsaImmoTool.PrimaryButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_start_can_listen"
-                android:layout_marginTop="8dp"
-                android:contentDescription="@string/button_start_can_listen" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="@string/hint_input_frame">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputFrameText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/sendFrameButton"
-                style="@style/Widget.PsaImmoTool.PrimaryButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_send_frame"
-                android:layout_marginTop="8dp"
-                android:contentDescription="@string/button_send_frame" />
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <!-- Zone logs (droite) -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/logsCard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/mainToolbar"
-        app:layout_constraintStart_toEndOf="@id/guideline40"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <!-- Colonne gauche : Boutons -->
+        <ScrollView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:padding="12dp">
-
-            <TextView
-                android:id="@+id/statusText"
-                style="@style/Widget.PsaImmoTool.SectionTitle"
-                android:text="@string/status_disconnected"
-                android:paddingBottom="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/logsScroll"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:scrollbars="vertical"
-                app:layout_constraintTop_toBottomOf="@id/statusText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/buttonsLayout">
-
-                <TextView
-                    android:id="@+id/outputText"
-                    style="@style/App.TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingExtra="4dp"
-                    android:text="" />
-
-            </androidx.core.widget.NestedScrollView>
+            android:layout_weight="1"
+            android:padding="8dp">
 
             <LinearLayout
-                android:id="@+id/buttonsLayout"
-                android:orientation="horizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:weightSum="3"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/bluetoothDeviceSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/connectButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_connect"
+                    android:layout_marginTop="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/requestVinButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_request_vin"
+                    android:layout_marginTop="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/requestPinButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_request_pin"
+                    android:layout_marginTop="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/startCanListenButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_start_can_listen"
+                    android:layout_marginTop="8dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/hint_input_frame">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputFrameText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sendFrameButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_send_frame"
+                    android:layout_marginTop="8dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/exportLogsButton"
-                    style="@style/Widget.PsaImmoTool.SecondaryButton"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/button_export_logs"
-                    android:contentDescription="@string/button_export_logs" />
+                    android:layout_marginTop="8dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/clearLogsButton"
-                    style="@style/Widget.PsaImmoTool.SecondaryButton"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
                     android:text="@string/button_clear_logs"
-                    android:contentDescription="@string/button_clear_logs" />
+                    android:layout_marginTop="8dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/generateReportButton"
-                    style="@style/Widget.PsaImmoTool.SecondaryButton"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
                     android:text="@string/button_generate_report"
-                    android:contentDescription="@string/button_generate_report" />
+                    android:layout_marginTop="8dp" />
 
             </LinearLayout>
+        </ScrollView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Colonne droite : Logs -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:paddingStart="16dp">
 
-    </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp"
+                android:text="@string/status_disconnected"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorError" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/outputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="?attr/colorOnSurface" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
