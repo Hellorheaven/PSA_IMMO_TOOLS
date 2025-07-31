@@ -12,33 +12,48 @@ object PermissionUtils {
     // === STORAGE PERMISSIONS ===
 
     fun hasStoragePermission(activity: Activity): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                activity, Manifest.permission.READ_MEDIA_IMAGES
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            ContextCompat.checkSelfPermission(
-                activity, Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
+        return when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED
+            }
+            Build.VERSION.SDK_INT <= Build.VERSION_CODES.P -> {
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+            }
+            else -> {
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+            }
         }
     }
+
+
 
     fun requestStoragePermission(activity: Activity, requestCode: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
-                requestCode
-            )
-        } else {
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                requestCode
-            )
+        return when {
+            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) -> {
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                    requestCode
+                )
+            }
+
+            (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) -> {
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    requestCode
+                )
+            }
+
+            else -> {
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    requestCode
+                )
+            }
         }
     }
-
     // === BLUETOOTH PERMISSIONS ===
 
     fun hasBluetoothPermission(activity: Activity): Boolean {
