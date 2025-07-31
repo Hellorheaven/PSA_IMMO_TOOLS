@@ -2,98 +2,140 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Saisie marque / modèle / année / appKey -->
-        <EditText
-            android:id="@+id/editBrand"
+        <!-- Champs texte avec TextInputLayout pour style moderne -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/label_brand" />
+            android:hint="@string/label_brand"
+            android:layout_marginBottom="8dp">
 
-        <EditText
-            android:id="@+id/editModel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/label_model" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editYear"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="@string/label_year" />
+            android:hint="@string/label_model"
+            android:layout_marginBottom="8dp">
 
-        <EditText
-            android:id="@+id/editAppKey"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/label_app_key" />
+            android:hint="@string/label_year"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_app_key"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editAppKey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Capacités supportées -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/capabilities_label"
-            android:paddingTop="8dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:paddingBottom="4dp"
+            android:textColor="?attr/colorOnSurface" />
 
         <CheckBox
             android:id="@+id/checkCan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_can" />
+            android:text="@string/label_can"
+            android:textColor="?attr/colorOnSurface" />
 
         <CheckBox
             android:id="@+id/checkObd2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_obd2" />
+            android:text="@string/label_obd2"
+            android:textColor="?attr/colorOnSurface" />
 
         <CheckBox
             android:id="@+id/checkKLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_kline" />
+            android:text="@string/label_kline"
+            android:textColor="?attr/colorOnSurface" />
 
         <!-- Choix des modules -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_module_label"
+            android:textStyle="bold"
             android:paddingTop="12dp"
-            android:textStyle="bold" />
+            android:paddingBottom="4dp"
+            android:textColor="?attr/colorOnSurface" />
 
         <Spinner
             android:id="@+id/moduleSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/addModuleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_add_module" />
+            android:text="@string/btn_add_module"
+            android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/moduleListText"
+        <!-- Liste des modules ajoutés -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerModules"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#555"
-            android:paddingTop="6dp" />
+            android:layout_height="200dp"
+            android:layout_marginTop="12dp" />
 
-        <!-- Bouton de sauvegarde -->
-        <Button
+        <!-- Boutons enregistrer et annuler -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_save_vehicle"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonCancelConfig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_cancel"
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/statusText"

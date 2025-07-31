@@ -29,6 +29,7 @@ class VehicleEditorActivity : Activity() {
     private lateinit var moduleListText: TextView
 
     private lateinit var saveButton: Button
+    private lateinit var cancelButton: Button
     private lateinit var statusText: TextView
 
     private val selectedModules = mutableSetOf<String>()
@@ -48,9 +49,10 @@ class VehicleEditorActivity : Activity() {
 
         moduleSpinner = findViewById(R.id.moduleSpinner)
         addModuleButton = findViewById(R.id.addModuleButton)
-        moduleListText = findViewById(R.id.moduleListText)
+        moduleListText = findViewById(R.id.recyclerModules)
 
         saveButton = findViewById(R.id.saveButton)
+        cancelButton = findViewById(R.id.buttonCancelConfig)
         statusText = findViewById(R.id.statusText)
 
         // Remplir la liste des modules depuis le XML

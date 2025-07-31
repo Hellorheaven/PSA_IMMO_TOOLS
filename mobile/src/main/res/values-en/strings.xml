@@ -213,7 +213,7 @@
     <string name="permission_bt_required">Bluetooth access permission is required. Please enable it in the settings.</string>
     <string name="enable_location">Please enable location services to detect Bluetooth devices.</string>
     <string name="permission_denied">Some permissions were denied. The app may not function correctly.</string>
-
+    <string name="button_cancel">Cancel</string>
 
 
 </resources>
