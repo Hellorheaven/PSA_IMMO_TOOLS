@@ -1,8 +1,7 @@
 package com.helly.psaimmotool.utils
 
-import com.helly.psaimmotool.can.CanFrame
 import com.helly.psaimmotool.R
-import com.helly.psaimmotool.utils.*
+import com.helly.psaimmotool.can.CanFrame
 
 
 object FrameInterpreter {

@@ -2,9 +2,13 @@ package com.helly.psaimmotool
 
 import android.app.Activity
 import android.os.Bundle
-import android.widget.*
-import com.helly.psaimmotool.utils.PsaKeyCalculator
-import com.helly.psaimmotool.utils.VehicleCapabilities
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
+import com.helly.psaimmotool.modules.PsaKeyCalculator
 import com.helly.psaimmotool.utils.VehicleCapabilitiesEditor
 import org.json.JSONArray
 import org.json.JSONObject

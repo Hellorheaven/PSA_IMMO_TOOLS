@@ -1,7 +1,8 @@
-package com.helly.psaimmotool.utils
+package com.helly.psaimmotool.modules
 
 import android.content.Context
 import com.helly.psaimmotool.R
+import com.helly.psaimmotool.utils.*
 
 object PsaKeyCalculator {
 
@@ -9,7 +10,27 @@ object PsaKeyCalculator {
         val appKey: String,
         val sec1: IntArray,
         val sec2: IntArray
-    )
+    ) {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as KeyParams
+
+            if (appKey != other.appKey) return false
+            if (!sec1.contentEquals(other.sec1)) return false
+            if (!sec2.contentEquals(other.sec2)) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = appKey.hashCode()
+            result = 31 * result + sec1.contentHashCode()
+            result = 31 * result + sec2.contentHashCode()
+            return result
+        }
+    }
 
     // Dernière opération (pour affichage dans rapport)
     var lastCalculation: Pair<String, String>? = null
@@ -88,7 +109,6 @@ object PsaKeyCalculator {
         updated[vehicle] = newEntry
 
         // Remplace la map (non idéale, mais simple ici)
-        @Suppress("UNCHECKED_CAST")
         val field = PsaKeyCalculator::class.java.getDeclaredField("seedKeyDatabase")
         field.isAccessible = true
         field.set(this, updated)

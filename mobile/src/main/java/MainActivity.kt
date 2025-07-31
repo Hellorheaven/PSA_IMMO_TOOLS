@@ -6,21 +6,39 @@ import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ListView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.helly.psaimmotool.modules.*
-import com.helly.psaimmotool.utils.*
+import com.helly.psaimmotool.modules.BaseModule
+import com.helly.psaimmotool.modules.CanBusModule
+import com.helly.psaimmotool.modules.CanBusUartModule
+import com.helly.psaimmotool.modules.GenericCanDemoModule
+import com.helly.psaimmotool.modules.KLineUsbModule
+import com.helly.psaimmotool.modules.Obd2BluetoothModule
+import com.helly.psaimmotool.modules.Obd2UsbModule
+import com.helly.psaimmotool.utils.ContextProvider
+import com.helly.psaimmotool.utils.LogExporter
+import com.helly.psaimmotool.utils.PermissionUtils
+import com.helly.psaimmotool.utils.ReportGenerator
+import com.helly.psaimmotool.utils.UiUpdater
+import com.helly.psaimmotool.utils.VehicleCapabilities
+import com.helly.psaimmotool.utils.VehicleManager
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -75,6 +93,7 @@ class MainActivity : AppCompatActivity() {
         bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
 
+        // On demande les permissions et on attend leur retour via onRequestPermissionsResult
         checkAndRequestAllPermissions(this)
     }
 
@@ -82,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         bindViews()
         initToolbar()
         setupButtons()
+
         UiUpdater.init(statusText, outputText)
         ContextProvider.init(applicationContext)
 
@@ -95,10 +115,11 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 2001) {
-            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 onPermissionsGranted()
             } else {
                 Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show()
+                finish()
             }
         }
     }

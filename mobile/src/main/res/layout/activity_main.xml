@@ -32,7 +32,7 @@
             android:layout_height="wrap_content">
 
 
-            <!-- Sélecteur Bluetooth -->
+            <!-- Selector Bluetooth -->
             <Spinner
                 android:id="@+id/bluetoothDeviceSpinner"
                 android:layout_width="match_parent"

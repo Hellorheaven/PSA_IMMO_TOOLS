@@ -1,13 +1,13 @@
 package com.helly.psaimmotool.utils
 
 import android.content.Context
-import android.os.Environment
 import android.widget.Toast
 import com.helly.psaimmotool.R
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 object LogExporter {
 

@@ -13,6 +13,25 @@ data class CanFrame(
     override fun toString(): String {
         return toHexString()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as CanFrame
+
+        if (id != other.id) return false
+        if (!data.contentEquals(other.data)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + data.contentHashCode()
+        return result
+    }
+
     companion object {
         /**
          * Parse une chaîne comme : "7E0 04 27 02 AA BB"

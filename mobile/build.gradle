@@ -15,7 +15,7 @@ def versionMinor = 0
 def versionPatch = 0
 
 if (versionPropsFile.canRead()) {
-    def Properties versionProps = new Properties()
+    Properties versionProps = new Properties()
     versionProps.load(new FileInputStream(versionPropsFile))
 
     versionMajor = versionProps['VERSION_MAJOR'].toInteger()

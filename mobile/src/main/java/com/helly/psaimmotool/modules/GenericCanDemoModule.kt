@@ -1,10 +1,11 @@
 package com.helly.psaimmotool.modules
 
 import android.content.Context
-import com.helly.psaimmotool.can.CanFrame
-import com.helly.psaimmotool.utils.*
 import com.helly.psaimmotool.R
-import kotlin.concurrent.fixedRateTimer
+import com.helly.psaimmotool.can.CanFrame
+import com.helly.psaimmotool.utils.DiagnosticRecorder
+import com.helly.psaimmotool.utils.FrameInterpreter
+import com.helly.psaimmotool.utils.UiUpdater
 
 class GenericCanDemoModule(private val context: Context) : BaseModule() {
 
