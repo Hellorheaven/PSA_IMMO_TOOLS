@@ -4,4 +4,5 @@
     <color name="teal_200">#03DAC5</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="md_theme_background">#121212</color>
 </resources>
