@@ -1,8 +1,8 @@
 <resources>
     <color name="purple_200">#BB86FC</color>
-    <color name="purple_500">#6200EE</color>
-    <color name="purple_700">#3700B3</color>
-    <color name="teal_200">#03DAC5</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="purple_500">#3F3D56</color> <!-- un violet/gris plus doux -->
+    <color name="purple_700">#2C2A40</color> <!-- variante sombre -->
+    <color name="teal_200">#03DAC5</color>
 </resources>
