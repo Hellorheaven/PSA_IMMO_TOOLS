@@ -1,42 +1,29 @@
 <resources>
 
-    <!-- Style texte section titre -->
-    <style name="Widget.PsaImmoTool.SectionTitle" parent="TextAppearance.Material3.TitleMedium">
-        <item name="android:textColor">@color/md_theme_onBackground</item>
-        <item name="android:fontWeight">600</item>
-        <item name="android:letterSpacing">0.05</item>
-        <item name="android:paddingBottom">8dp</item>
-    </style>
-
-    <!-- Style bouton primaire -->
-    <style name="Widget.PsaImmoTool.PrimaryButton" parent="Widget.Material3.Button">
+    <!-- Boutons principaux -->
+    <style name="Widget.PsaImmoTool.Button" parent="Widget.Material3.Button">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/md_theme_onPrimary</item>
-        <item name="backgroundTint">@color/md_theme_primary</item>
-        <item name="android:fontWeight">600</item>
-        <item name="cornerRadius">12dp</item>
-        <item name="android:paddingVertical">12dp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="ThemeOverlay.PsaImmoTool.Toolbar" parent="ThemeOverlay.Material3.ActionBar">
-        <item name="android:textColorPrimary">@color/md_theme_onPrimary</item>
-        <item name="android:background">@color/md_theme_primary</item>
-    </style>
-
-    <!-- Style bouton secondaire -->
-    <style name="Widget.PsaImmoTool.SecondaryButton" parent="Widget.Material3.Button.OutlinedButton">
+    <!-- Boutons secondaires (outlined) -->
+    <style name="Widget.PsaImmoTool.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/md_theme_primary</item>
-        <item name="strokeColor">@color/md_theme_primary</item>
-        <item name="strokeWidth">2dp</item>
-        <item name="cornerRadius">12dp</item>
-        <item name="android:paddingVertical">12dp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
-    <!-- Style texte simple -->
-    <style name="App.TextView" parent="TextAppearance.Material3.BodyMedium">
-        <item name="android:textColor">@color/md_theme_onSurface</item>
+    <!-- TextView -->
+    <style name="Widget.PsaImmoTool.TextView" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
 </resources>

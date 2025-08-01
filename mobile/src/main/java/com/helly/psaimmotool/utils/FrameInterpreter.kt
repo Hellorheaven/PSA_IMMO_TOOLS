@@ -1,5 +1,6 @@
 package com.helly.psaimmotool.utils
 
+import android.annotation.SuppressLint
 import com.helly.psaimmotool.R
 import com.helly.psaimmotool.can.CanFrame
 
@@ -99,6 +100,7 @@ object FrameInterpreter {
         return dtcs
     }
 
+    @SuppressLint("DefaultLocale")
     private fun formatDtc(code: Int): String {
         val firstChar = when ((code shr 14) and 0x03) {
             0 -> 'P'

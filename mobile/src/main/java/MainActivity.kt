@@ -43,6 +43,8 @@ import com.helly.psaimmotool.utils.VehicleManager
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
+
+
     private lateinit var connectButton: Button
     private lateinit var requestVinButton: Button
     private lateinit var requestPinButton: Button
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity() {
     private val bluetoothDevices = mutableListOf<BluetoothDevice>()
     private lateinit var btNamesAdapter: ArrayAdapter<String>
     private var btDialog: AlertDialog? = null
+    private var isModuleConnected = false
 
     private val bluetoothReceiver = object : BroadcastReceiver() {
         @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
@@ -194,6 +197,8 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     buildModuleForName(selected)
                     updateUiVisibilityForModule()
+                    isModuleConnected = false
+                    connectButton.text = getString(R.string.button_connect)
                 }
             }.show()
     }
@@ -254,7 +259,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        connectButton.setOnClickListener { currentModule?.connect() }
+        connectButton.setOnClickListener {
+            if (currentModule == null) {
+                Toast.makeText(this, R.string.no_module_connected, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (!isModuleConnected) {
+                currentModule?.connect()
+                isModuleConnected = true
+                connectButton.text = getString(R.string.button_disconnect)
+            } else {
+                currentModule?.disconnect()
+                isModuleConnected = false
+                connectButton.text = getString(R.string.button_connect)
+            }
+        }
+
         requestVinButton.setOnClickListener { currentModule?.requestVin() }
         requestPinButton.setOnClickListener { currentModule?.requestPin() }
         startCanListenButton.setOnClickListener { currentModule?.startCanListening() }

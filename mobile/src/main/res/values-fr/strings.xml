@@ -217,6 +217,7 @@
     <string name="enable_location">Veuillez activer la localisation pour détecter les périphériques Bluetooth.</string>
     <string name="permission_denied">Certaines autorisations ont été refusées. L\'application pourrait ne pas fonctionner correctement.</string>
     <string name="button_cancel">Annuler</string>
+    <string name="button_disconnect">Déconnecter</string>
 
 
 

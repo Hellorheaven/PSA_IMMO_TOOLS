@@ -2,6 +2,7 @@
 
 package com.helly.psaimmotool.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
@@ -42,6 +43,7 @@ object LocaleUtils {
      * @param langCode The language code to set (e.g., "en", "fr").
      */
 
+    @SuppressLint("AppBundleLocaleChanges")
     fun setLocaleAndRestart(activity: Activity, langCode: String) {
         val locale = Locale(langCode)
         Locale.setDefault(locale)

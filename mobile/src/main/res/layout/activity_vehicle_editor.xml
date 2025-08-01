@@ -2,15 +2,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="?attr/colorSurface">
+    android:background="?attr/colorSurface"
+    android:padding="16dp">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Champs texte avec TextInputLayout pour style moderne -->
+        <!-- Brand -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,6 +24,7 @@
                 android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Model -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
                 android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Year -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,6 +52,7 @@
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- App Key -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +66,7 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Capacités supportées -->
+        <!-- Capabilities -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,7 +96,7 @@
             android:text="@string/label_kline"
             android:textColor="?attr/colorOnSurface" />
 
-        <!-- Choix des modules -->
+        <!-- Module selection -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,30 +116,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_add_module"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            style="@style/Widget.PsaImmoTool.Button" />
 
-        <!-- Liste des modules ajoutés -->
+        <!-- Liste des modules -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerModules"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="12dp" />
 
-        <!-- Boutons enregistrer et annuler -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/saveButton"
+        <!-- Boutons Save & Cancel sur la même ligne -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_save_vehicle"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="end">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonCancelConfig"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_cancel"
-            android:layout_marginTop="8dp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonCancelConfig"
+                style="@style/Widget.PsaImmoTool.Button.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_cancel"
+                android:layout_marginEnd="8dp" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveButton"
+                style="@style/Widget.PsaImmoTool.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_save_vehicle" />
+        </LinearLayout>
+
+        <!-- Status -->
         <TextView
             android:id="@+id/statusText"
             android:layout_width="match_parent"

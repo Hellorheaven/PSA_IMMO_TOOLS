@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.widget.TextView
 import androidx.preference.PreferenceManager
 import com.helly.psaimmotool.*
+import androidx.core.content.edit
 
 object UiUpdater {
 
@@ -43,7 +44,7 @@ object UiUpdater {
 
     fun setAutoScrollEnabled(context: Context, enabled: Boolean) {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        prefs.edit().putBoolean(KEY_AUTO_SCROLL, enabled).apply()
+        prefs.edit { putBoolean(KEY_AUTO_SCROLL, enabled) }
     }
 
 //    fun isAutoScrollEnabled(context: Context): Boolean {

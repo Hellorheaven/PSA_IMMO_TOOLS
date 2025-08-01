@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Application -->
     <string name="app_name">PSA Immo Tool</string>
 
@@ -121,7 +121,7 @@
     <string name="label_year">Year (e.g., 2008)</string>
     <string name="label_app_key">AppKey (e.g., D91C)</string>
     <string name="btn_save_vehicle">Save</string>
-    <string name="vehicle_saved">Vehicle %1$s %2$s %3$d saved successfully</string>
+    <string name="vehicle_saved" tools:ignore="PluralsCandidate">Vehicle %1$s %2$s %3$d saved successfully</string>
     <string name="invalid_vehicle_data">Please fill in all fields correctly</string>
     <string name="simulated_frame_received">Simulated frame received : %1$s</string>
     <string name="hint_input_frame">Enter a custom CAN/OBD2 frame</string>
@@ -214,6 +214,7 @@
     <string name="enable_location">Please enable location services to detect Bluetooth devices.</string>
     <string name="permission_denied">Some permissions were denied. The app may not function correctly.</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_disconnect">Disconnect</string>
 
 
 </resources>
