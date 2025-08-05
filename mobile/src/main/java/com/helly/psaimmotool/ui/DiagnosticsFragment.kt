@@ -1,6 +1,7 @@
 package com.helly.psaimmotool.ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.*
@@ -46,6 +47,7 @@ class DiagnosticsFragment : Fragment() {
     private val bluetoothAdapter: BluetoothAdapter? by lazy { BluetoothAdapter.getDefaultAdapter() }
 
     private val bluetoothReceiver = object : BroadcastReceiver() {
+        @SuppressLint("MissingPermission")
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == BluetoothDevice.ACTION_FOUND) {

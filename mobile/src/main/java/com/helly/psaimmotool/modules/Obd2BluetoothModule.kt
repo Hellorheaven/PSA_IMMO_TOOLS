@@ -1,5 +1,6 @@
 package com.helly.psaimmotool.modules
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.content.Context
@@ -21,6 +22,7 @@ class Obd2BluetoothModule(
     private var outputStream: OutputStream? = null
     private var isConnected = false
 
+    @SuppressLint("MissingPermission")
     override fun connect() {
         if (device == null) {
             UiUpdater.appendLog(context.getString(R.string.no_bluetooth_device))
