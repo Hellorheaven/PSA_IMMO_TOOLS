@@ -218,6 +218,10 @@
     <string name="permission_denied">Certaines autorisations ont été refusées. L\'application pourrait ne pas fonctionner correctement.</string>
     <string name="button_cancel">Annuler</string>
     <string name="button_disconnect">Déconnecter</string>
+    <string name="select_brand">Sélectionnez une marque</string>
+    <string name="select_model">Sélectionnez un modèle</string>
+    <string name="select_year">Sélectionnez une année</string>
+    <string name="vehicle_selected">%1$s %2$s %3$d sélectionné</string>
 
 
 

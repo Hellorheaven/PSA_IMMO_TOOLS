@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity() {
     private fun showBrandSelectionDialog() {
         val brands = VehicleCapabilities.getAllBrands()
         AlertDialog.Builder(this)
-            .setTitle("Sélectionnez une marque")
+            .setTitle(getString(R.string.select_brand))
             .setItems(brands.toTypedArray()) { _, which ->
                 showModelSelectionDialog(brands[which])
             }
@@ -193,7 +193,7 @@ class MainActivity : AppCompatActivity() {
     private fun showModelSelectionDialog(brand: String) {
         val models = VehicleCapabilities.getModelsForBrand(brand)
         AlertDialog.Builder(this)
-            .setTitle("Sélectionnez un modèle")
+            .setTitle(getString(R.string.select_model))
             .setItems(models.toTypedArray()) { _, which ->
                 showYearSelectionDialog(brand, models[which])
             }
@@ -203,11 +203,11 @@ class MainActivity : AppCompatActivity() {
     private fun showYearSelectionDialog(brand: String, model: String) {
         val years = VehicleCapabilities.getYearsForModel(brand, model)
         AlertDialog.Builder(this)
-            .setTitle("Sélectionnez une année")
+            .setTitle(getString(R.string.select_year))
             .setItems(years.map { it.toString() }.toTypedArray()) { _, which ->
                 val selectedYear = years[which]
                 VehicleManager.selectedVehicle = Triple(brand, model, selectedYear)
-                Toast.makeText(this, "$brand $model $selectedYear sélectionné", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.vehicle_selected, brand, model, selectedYear), Toast.LENGTH_SHORT).show()
             }
             .show()
     }

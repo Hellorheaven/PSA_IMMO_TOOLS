@@ -215,6 +215,10 @@
     <string name="permission_denied">Some permissions were denied. The app may not function correctly.</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_disconnect">Disconnect</string>
+    <string name="select_brand">Select a brand</string>
+    <string name="select_model">Select a model</string>
+    <string name="select_year">Select a year</string>
+    <string name="vehicle_selected">%1$s %2$s %3$d selected</string>
 
 
 </resources>
