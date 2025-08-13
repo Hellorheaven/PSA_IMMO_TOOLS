@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
 
         // On demande les permissions et on attend leur retour via onRequestPermissionsResult
@@ -264,23 +264,23 @@ class MainActivity : AppCompatActivity() {
         bluetoothAdapter?.startDiscovery()
     }
 
-    private fun showVehicleSelectionDialog() {
-        val vehicules = listOf(
-            Triple("Peugeot", "207", 2008),
-            Triple("MG", "4", 2023),
-            Triple("Ford", "Mustang Mach-E", 2021)
-        )
-        val labels = vehicules.map { "${it.first} ${it.second} ${it.third}" }.toTypedArray()
-
-        AlertDialog.Builder(this)
-            .setTitle(R.string.select_vehicle)
-            .setItems(labels) { _, which ->
-                val v = vehicules[which]
-                VehicleManager.setVehicle(v.first, v.second, v.third)
-                updateUiVisibilityForModule()
-            }
-            .show()
-    }
+//    private fun showVehicleSelectionDialog() {
+//        val vehicules = listOf(
+//            Triple("Peugeot", "207", 2008),
+//            Triple("MG", "4", 2023),
+//            Triple("Ford", "Mustang Mach-E", 2021)
+//        )
+//        val labels = vehicules.map { "${it.first} ${it.second} ${it.third}" }.toTypedArray()
+//
+//        AlertDialog.Builder(this)
+//            .setTitle(R.string.select_vehicle)
+//            .setItems(labels) { _, which ->
+//                val v = vehicules[which]
+//                VehicleManager.setVehicle(v.first, v.second, v.third)
+//                updateUiVisibilityForModule()
+//            }
+//            .show()
+//    }
 
     private fun updateUiVisibilityForModule() {
         val isCanModule = currentModuleName.contains("CANBUS", true)
