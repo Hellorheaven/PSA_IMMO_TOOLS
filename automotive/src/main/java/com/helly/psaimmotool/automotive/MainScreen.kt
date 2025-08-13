@@ -1,5 +1,7 @@
 package com.helly.psaimmotool.automotive
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.car.app.CarContext
 import androidx.car.app.Screen
 import androidx.car.app.model.*
@@ -21,15 +23,26 @@ class MainScreen(private val ctx: CarContext) : Screen(ctx) {
             status = text
             invalidate()
         }
+
         override fun appendLog(line: String) {
             logs.add(0, line)
-            if (logs.size > 200) logs.removeLast()
+            if (logs.size > 200) logs.removeAt(logs.lastIndex)
             invalidate()
         }
 
         override fun appendOutput(line: String) {
             logs.add(0, line)
-            if (logs.size > 200) logs.removeLast()
+            if (logs.size > 200) logs.removeAt(logs.lastIndex)
+            invalidate()
+        }
+
+        override fun setConnectedStatus(text: String, module: String) {
+            status = text
+            if (module.isNotBlank()) {
+                logs.add(0, "📡 $status")
+                if (logs.size > 200) logs.removeAt(logs.lastIndex)
+
+            }
             invalidate()
         }
     }

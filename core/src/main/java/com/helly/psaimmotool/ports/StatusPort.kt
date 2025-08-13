@@ -8,4 +8,5 @@ interface StatusPort {
     fun setStatus(text: String)
     fun appendLog(line: String)
     fun appendOutput(line: String)
+    fun setConnectedStatus(text: String, module: String)
 }

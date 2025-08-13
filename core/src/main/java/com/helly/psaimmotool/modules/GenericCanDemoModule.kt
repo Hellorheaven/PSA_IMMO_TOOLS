@@ -13,7 +13,7 @@ class GenericCanDemoModule(private val context: Context) : BaseModule() {
     private var timer: java.util.Timer? = null
 
     override fun connect() {
-        UiUpdater.setConnectedStatus(context.getString(R.string.connected_to, "CAN DEMO"), "CAN DEMO")
+        statusPort?.setConnectedStatus(context.getString(R.string.connected_to, "CAN DEMO"), "CAN DEMO")
         DiagnosticRecorder.setConnectionStatus(true)
     }
 

@@ -2,9 +2,9 @@ package com.helly.psaimmotool.modules
 
 import android.os.Handler
 import android.os.Looper
-import com.helly.psaimmotool.utils.UiUpdater
+//import com.helly.psaimmotool.utils.UiUpdater
 import com.helly.psaimmotool.utils.DiagnosticRecorder
-import com.helly.psaimmotool.R
+//import com.helly.psaimmotool.R
 import java.util.concurrent.Executors
 
 abstract class BaseModule {
@@ -51,7 +51,7 @@ abstract class BaseModule {
                     val fakeFrame = "Simulated CAN Frame ID:672 DATA:0A FF"
                     handler.post {
                         val log = context.getString(R.string.simulated_frame_received, fakeFrame)
-                        UiUpdater.appendLog(log)
+                        statusPort?.appendLog(log)
                         DiagnosticRecorder.addRawFrame(fakeFrame)
                     }
                 } catch (e: InterruptedException) {
@@ -61,7 +61,19 @@ abstract class BaseModule {
             }
         }
     }
+    private var statusPort: com.helly.psaimmotool.ports.StatusPort? = null
 
+    fun withStatusPort(port: com.helly.psaimmotool.ports.StatusPort?): BaseModule {
+        this.statusPort = port
+        return this
+    }
+
+    protected fun report(line: String) {
+        try {
+            statusPort?.appendOutput(line)
+        } catch (_: Throwable) {}
+        try { statusPort?.appendLog(line) } catch (_: Throwable) {}
+    }
     /**
      * Arrête l'écoute du thread générique.
      */
