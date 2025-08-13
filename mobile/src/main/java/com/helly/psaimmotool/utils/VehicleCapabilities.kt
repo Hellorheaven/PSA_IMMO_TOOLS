@@ -9,6 +9,7 @@ object VehicleCapabilities {
         val modelResId: Int = 0,
         val brand: String = "",
         val model: String = "",
+        val year: Int = 0,
         val supportsObd2: Boolean,
         val supportsCan: Boolean,
         val supportsKLine: Boolean,
@@ -16,184 +17,130 @@ object VehicleCapabilities {
         val defaultFilters: List<String> = emptyList()
     )
 
-    private val capabilitiesMap: MutableMap<Pair<String, String>, Capabilities> = mutableMapOf(
+    private val capabilitiesMap: MutableMap<Triple<String, String, Int>, Capabilities> = mutableMapOf(
 
         // --- PEUGEOT ---
-        "Peugeot" to "207" to Capabilities(
-            R.string.brand_peugeot,
-            R.string.model_207,
-            supportsCan = true,
-            supportsObd2 = true,
-            supportsKLine = true,
+        Triple("Peugeot", "207", 2008) to Capabilities(
+            R.string.brand_peugeot, R.string.model_207,
+            supportsCan = true, supportsObd2 = true, supportsKLine = true,
             compatibleModules = listOf(
-                "OBD2 (USB)",
-                "OBD2 (Bluetooth)",
-                "K-Line (USB)",
-                "CANBUS (USB)",
-                "CANBUS (UART)",
-                "CANBUS (Demo)"
+                "OBD2 (USB)", "OBD2 (Bluetooth)", "K-Line (USB)",
+                "CANBUS (USB)", "CANBUS (UART)", "CANBUS (Demo)"
             )
         ),
-        "Peugeot" to "307" to Capabilities(
-            R.string.brand_peugeot,
-            R.string.model_307,
-            supportsCan = true,
-            supportsObd2 = true,
-            supportsKLine = true,
+        Triple("Peugeot", "207", 2010) to Capabilities(
+            R.string.brand_peugeot, R.string.model_207,
+            supportsCan = true, supportsObd2 = true, supportsKLine = true,
             compatibleModules = listOf(
-                "OBD2 (USB)",
-                "OBD2 (Bluetooth)",
-                "K-Line (USB)",
-                "CANBUS (USB)",
-                "CANBUS (UART)",
-                "CANBUS (Demo)"
+                "OBD2 (USB)", "OBD2 (Bluetooth)", "K-Line (USB)",
+                "CANBUS (USB)", "CANBUS (UART)", "CANBUS (Demo)"
+            )
+        ),
+        Triple("Peugeot", "307", 2007) to Capabilities(
+            R.string.brand_peugeot, R.string.model_307,
+            supportsCan = true, supportsObd2 = true, supportsKLine = true,
+            compatibleModules = listOf(
+                "OBD2 (USB)", "OBD2 (Bluetooth)", "K-Line (USB)",
+                "CANBUS (USB)", "CANBUS (UART)", "CANBUS (Demo)"
             )
         ),
 
         // --- DUCATI ---
-        "Ducati" to "848" to Capabilities(
-            R.string.brand_ducati,
-            R.string.model_848,
-            supportsCan = true,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("Ducati", "848", 2009) to Capabilities(
+            R.string.brand_ducati, R.string.model_848,
+            supportsCan = true, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf(
-                "OBD2 (USB)",
-                "OBD2 (Bluetooth)",
-                "CANBUS (USB)",
-                "CANBUS (UART)",
-                "CANBUS (Demo)"
+                "OBD2 (USB)", "OBD2 (Bluetooth)",
+                "CANBUS (USB)", "CANBUS (UART)", "CANBUS (Demo)"
             )
         ),
-        "Ducati" to "1098" to Capabilities(
-            R.string.brand_ducati,
-            R.string.model_1098,
-            supportsCan = false,
-            supportsObd2 = true,
-            supportsKLine = false,
-            compatibleModules = listOf(
-                "OBD2 (USB)",
-                "OBD2 (Bluetooth)"
-            )
+        Triple("Ducati", "1098", 2009) to Capabilities(
+            R.string.brand_ducati, R.string.model_1098,
+            supportsCan = false, supportsObd2 = true, supportsKLine = false,
+            compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
-        "Ducati" to "1198" to Capabilities(
-            R.string.brand_ducati,
-            R.string.model_1198,
-            supportsCan = false,
-            supportsObd2 = true,
-            supportsKLine = false,
-            compatibleModules = listOf(
-                "OBD2 (USB)",
-                "OBD2 (Bluetooth)"
-            )
+        Triple("Ducati", "1198", 2010) to Capabilities(
+            R.string.brand_ducati, R.string.model_1198,
+            supportsCan = false, supportsObd2 = true, supportsKLine = false,
+            compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
 
         // --- MG ---
-        "MG" to "4" to Capabilities(
-            R.string.brand_mg,
-            R.string.model_4,
-            supportsCan = true,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("MG", "4", 2022) to Capabilities(
+            R.string.brand_mg, R.string.model_4,
+            supportsCan = true, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf(
-                "OBD2 (USB)",
-                "OBD2 (Bluetooth)",
-                "CANBUS (USB)",
-                "CANBUS (UART)",
-                "CANBUS (Demo)"
+                "OBD2 (USB)", "OBD2 (Bluetooth)",
+                "CANBUS (USB)", "CANBUS (UART)", "CANBUS (Demo)"
             )
         ),
-        "MG" to "3" to Capabilities(
-            R.string.brand_mg,
-            R.string.model_3,
-            supportsCan = false,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("MG", "3", 2018) to Capabilities(
+            R.string.brand_mg, R.string.model_3,
+            supportsCan = false, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
-        "MG" to "Marvel R" to Capabilities(
-            R.string.brand_mg,
-            R.string.model_marvel_r,
-            supportsCan = true,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("MG", "Marvel R", 2021) to Capabilities(
+            R.string.brand_mg, R.string.model_marvel_r,
+            supportsCan = true, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)", "CANBUS (UART)")
         ),
 
         // --- FORD ---
-        "Ford" to "Mustang Mach-E" to Capabilities(
-            R.string.brand_ford,
-            R.string.model_mustang_mache,
-            supportsCan = true,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("Ford", "Mustang Mach-E", 2021) to Capabilities(
+            R.string.brand_ford, R.string.model_mustang_mache,
+            supportsCan = true, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf(
-                "OBD2 (USB)",
-                "OBD2 (Bluetooth)",
-                "CANBUS (USB)",
-                "CANBUS (UART)",
-                "CANBUS (Demo)"
+                "OBD2 (USB)", "OBD2 (Bluetooth)",
+                "CANBUS (USB)", "CANBUS (UART)", "CANBUS (Demo)"
             )
         ),
-        "Ford" to "Mustang (2000+)" to Capabilities(
-            R.string.brand_ford,
-            R.string.model_mustang_series,
-            supportsCan = false,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("Ford", "Mustang (2000+)", 2000) to Capabilities(
+            R.string.brand_ford, R.string.model_mustang_series,
+            supportsCan = false, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
-        "Ford" to "Kuga" to Capabilities(
-            R.string.brand_ford,
-            R.string.model_kuga,
-            supportsCan = false,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("Ford", "Kuga", 2019) to Capabilities(
+            R.string.brand_ford, R.string.model_kuga,
+            supportsCan = false, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
-        "Ford" to "Puma" to Capabilities(
-            R.string.brand_ford,
-            R.string.model_puma,
-            supportsCan = false,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("Ford", "Puma", 2020) to Capabilities(
+            R.string.brand_ford, R.string.model_puma,
+            supportsCan = false, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
-        "Ford" to "Fiesta" to Capabilities(
-            R.string.brand_ford,
-            R.string.model_fiesta,
-            supportsCan = false,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("Ford", "Fiesta", 2017) to Capabilities(
+            R.string.brand_ford, R.string.model_fiesta,
+            supportsCan = false, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)")
         ),
 
         // --- TOYOTA ---
-        "Toyota" to "Corolla" to Capabilities(
-            R.string.brand_toyota,
-            R.string.model_corolla,
-            supportsCan = true,
-            supportsObd2 = true,
-            supportsKLine = false,
+        Triple("Toyota", "Corolla", 2020) to Capabilities(
+            R.string.brand_toyota, R.string.model_corolla,
+            supportsCan = true, supportsObd2 = true, supportsKLine = false,
             compatibleModules = listOf("OBD2 (USB)", "OBD2 (Bluetooth)", "CANBUS (USB)")
         )
     )
 
-    fun getCapabilities(brand: String?, model: String?): Capabilities? {
-        if (brand == null || model == null) return null
-        return capabilitiesMap[brand to model]
+    fun getAllBrands(): List<String> = capabilitiesMap.keys.map { it.first }.distinct().sorted()
+    fun getModelsForBrand(brand: String): List<String> =
+        capabilitiesMap.keys.filter { it.first == brand }.map { it.second }.distinct().sorted()
+    fun getYearsForModel(brand: String, model: String): List<Int> =
+        capabilitiesMap.keys.filter { it.first == brand && it.second == model }
+            .map { it.third }.distinct().sorted()
+
+    fun getCapabilities(brand: String?, model: String?, year: Int?): Capabilities? {
+        if (brand == null || model == null || year == null) return null
+        return capabilitiesMap[Triple(brand, model, year)]
+    }
+    fun overrideCapabilities(key: Triple<String, String, Int>, capabilities: Capabilities) {
+        capabilitiesMap[key] = capabilities
     }
 
     fun getCompatibleModules(): List<String> {
         val vehicle = VehicleManager.selectedVehicle
-        return getCapabilities(vehicle.first, vehicle.second)?.compatibleModules ?: emptyList()
+        return getCapabilities(vehicle.first, vehicle.second, vehicle.third)?.compatibleModules ?: emptyList()
     }
-    fun overrideCapabilities(key: String, capabilities: Capabilities) {
-        val parts = key.split(" ", limit = 2)
-        if (parts.size == 2) {
-            val brand = parts[0]
-            val model = parts[1]
-            capabilitiesMap[brand to model] = capabilities
-        }
-    }
+
 }

@@ -12,7 +12,7 @@ object ReportGenerator {
 
     fun generate(context: Context, moduleName: String, logs: String): String {
         val (brand, model, year) = VehicleManager.selectedVehicle
-        val capabilities = VehicleCapabilities.getCapabilities(brand, model)
+        val capabilities = VehicleCapabilities.getCapabilities(brand, model, year)
         val algoAvailable = PsaKeyCalculator.hasKeyAlgoFor(VehicleManager.selectedVehicle)
 
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())

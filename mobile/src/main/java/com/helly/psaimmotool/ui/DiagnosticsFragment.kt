@@ -248,7 +248,7 @@ class DiagnosticsFragment : Fragment() {
 
     private fun updateVehicleInfoDisplay() {
         val (brand, model, year) = VehicleManager.selectedVehicle
-        val capabilities = VehicleCapabilities.getCapabilities(brand, model)
+        val capabilities = VehicleCapabilities.getCapabilities(brand, model, year)
         val algoAvailable = PsaKeyCalculator.hasKeyAlgoFor(VehicleManager.selectedVehicle)
         val capText = buildString {
             append("$brand $model $year\n")
@@ -277,7 +277,7 @@ class DiagnosticsFragment : Fragment() {
         val connectionStatus =
             if (isConnected) getString(R.string.connection_success) else getString(R.string.connection_failed)
 
-        val capabilities = VehicleCapabilities.getCapabilities(brand, model)
+        val capabilities = VehicleCapabilities.getCapabilities(brand, model, year)
         val supportsCan = capabilities?.supportsCan?.toString() ?: "N/A"
         val supportsObd2 = capabilities?.supportsObd2?.toString() ?: "N/A"
         val supportsKLine = capabilities?.supportsKLine?.toString() ?: "N/A"

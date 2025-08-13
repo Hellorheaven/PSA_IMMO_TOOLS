@@ -87,6 +87,7 @@ class VehicleEditorActivity : Activity() {
             VehicleCapabilitiesEditor.registerVehicle(
                     brand = brand,
                     model = model,
+                    year= year,
                     supportsCan = checkCan.isChecked,
                     supportsObd2 = checkObd2.isChecked,
                     supportsKLine = checkKLine.isChecked,

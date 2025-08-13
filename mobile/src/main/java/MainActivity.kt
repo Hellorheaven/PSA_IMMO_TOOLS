@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_select_vehicle -> { showVehicleSelectionDialog(); true }
+            R.id.menu_select_vehicle -> { showBrandSelectionDialog(); true }
             R.id.menu_select_module -> { showModuleSelectionDialog(); true }
             R.id.menu_settings -> { startActivity(Intent(this, SettingsActivity::class.java)); true }
             R.id.menu_quit -> { finish(); true }
@@ -180,6 +180,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showBrandSelectionDialog() {
+        val brands = VehicleCapabilities.getAllBrands()
+        AlertDialog.Builder(this)
+            .setTitle("Sélectionnez une marque")
+            .setItems(brands.toTypedArray()) { _, which ->
+                showModelSelectionDialog(brands[which])
+            }
+            .show()
+    }
+
+    private fun showModelSelectionDialog(brand: String) {
+        val models = VehicleCapabilities.getModelsForBrand(brand)
+        AlertDialog.Builder(this)
+            .setTitle("Sélectionnez un modèle")
+            .setItems(models.toTypedArray()) { _, which ->
+                showYearSelectionDialog(brand, models[which])
+            }
+            .show()
+    }
+
+    private fun showYearSelectionDialog(brand: String, model: String) {
+        val years = VehicleCapabilities.getYearsForModel(brand, model)
+        AlertDialog.Builder(this)
+            .setTitle("Sélectionnez une année")
+            .setItems(years.map { it.toString() }.toTypedArray()) { _, which ->
+                val selectedYear = years[which]
+                VehicleManager.selectedVehicle = Triple(brand, model, selectedYear)
+                Toast.makeText(this, "$brand $model $selectedYear sélectionné", Toast.LENGTH_SHORT).show()
+            }
+            .show()
+    }
     private fun showModuleSelectionDialog() {
         val modules = VehicleCapabilities.getCompatibleModules()
         if (modules.isEmpty()) return
