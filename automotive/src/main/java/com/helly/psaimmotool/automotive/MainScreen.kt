@@ -26,6 +26,12 @@ class MainScreen(private val ctx: CarContext) : Screen(ctx) {
             if (logs.size > 200) logs.removeLast()
             invalidate()
         }
+
+        override fun appendOutput(line: String) {
+            logs.add(0, line)
+            if (logs.size > 200) logs.removeLast()
+            invalidate()
+        }
     }
 
     // TODO: instancier ici votre module existant (sans renommer quoi que ce soit) et lui injecter le port :
