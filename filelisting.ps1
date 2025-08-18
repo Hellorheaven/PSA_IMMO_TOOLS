@@ -1,4 +1,3 @@
-# Liste uniquement les fichiers pertinents (Kotlin, Java, XML)
 Get-ChildItem -Recurse -Include *.kt, *.java, *.xml `
   | Where-Object {
       $_.FullName -notmatch '\\\.git\\' -and
@@ -6,7 +5,6 @@ Get-ChildItem -Recurse -Include *.kt, *.java, *.xml `
       $_.FullName -notmatch '\\build\\' -and
       $_.FullName -notmatch '\\\.idea\\'
     } `
-  | ForEach-Object { $_.FullName } `
+  | ForEach-Object { $_.FullName.Replace((Get-Location).Path + "\", "") } `
+  | Sort-Object `
   | Out-File -FilePath file_list.txt -Encoding UTF8
-
-Write-Output "Liste sauvegardée dans file_list.txt"
