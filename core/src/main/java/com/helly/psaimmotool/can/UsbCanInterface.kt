@@ -1,11 +1,17 @@
 package com.helly.psaimmotool.can
 
-import android.content.Context
-import com.helly.psaimmotool.utils.UiUpdater
+import com.helly.psaimmotool.ports.StatusPort
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
 
-class UsbCanInterface(private val context: Context) : CanCommunicationInterface {
+class UsbCanInterface(
+    private val statusPort: StatusPort?, // injecté depuis mobile
+    private val resIdConnected: Int,
+    private val resIdDisconnected: Int,
+    private val resIdSend: Int,
+    private val resIdListeningStarted: Int,
+    private val resIdSimulatedFrame: Int
+) : CanCommunicationInterface {
 
     private var isConnected = false
     private var timer: Timer? = null
@@ -13,18 +19,18 @@ class UsbCanInterface(private val context: Context) : CanCommunicationInterface 
 
     override fun connect() {
         isConnected = true
-        UiUpdater.appendLog("✅ USB CAN simulé connecté")
+        statusPort?.appendLogRes(resIdConnected)
     }
 
     override fun disconnect() {
         isConnected = false
         timer?.cancel()
-        UiUpdater.appendLog("🛑 USB CAN simulé déconnecté")
+        statusPort?.appendLogRes(resIdDisconnected)
     }
 
     override fun sendFrame(frame: CanFrame) {
         if (!isConnected) return
-        UiUpdater.appendLog("🧪 [CAN Simulé] Envoi : ${frame.toHexString()}")
+        statusPort?.appendLogRes(resIdSend, frame.toHexString())
     }
 
     override fun startListening(callback: (CanFrame) -> Unit) {
@@ -40,8 +46,9 @@ class UsbCanInterface(private val context: Context) : CanCommunicationInterface 
                 )
             )
             callback(simulated)
+            statusPort?.appendLogRes(resIdSimulatedFrame, simulated.toHexString())
         }
 
-        UiUpdater.appendLog("👂 Écoute CAN simulée démarrée")
+        statusPort?.appendLogRes(resIdListeningStarted)
     }
 }

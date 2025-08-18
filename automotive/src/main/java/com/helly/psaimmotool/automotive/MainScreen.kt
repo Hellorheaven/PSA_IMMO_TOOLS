@@ -19,10 +19,10 @@ class MainScreen(private val ctx: CarContext) : Screen(ctx) {
 
     // Port de statut qui recevra les messages des modules existants
     private val carStatusPort = object : StatusPort {
-        override fun setStatus(text: String) {
-            status = text
-            invalidate()
-        }
+//        override fun setStatus(text: String) {
+//            status = text
+//            invalidate()
+//        }
 
         override fun appendLog(line: String) {
             logs.add(0, line)
@@ -30,11 +30,11 @@ class MainScreen(private val ctx: CarContext) : Screen(ctx) {
             invalidate()
         }
 
-        override fun appendOutput(line: String) {
-            logs.add(0, line)
-            if (logs.size > 200) logs.removeAt(logs.lastIndex)
-            invalidate()
-        }
+//        override fun appendOutput(line: String) {
+//            logs.add(0, line)
+//            if (logs.size > 200) logs.removeAt(logs.lastIndex)
+//            invalidate()
+//        }
 
         override fun setConnectedStatus(text: String, module: String) {
             status = text
@@ -44,6 +44,11 @@ class MainScreen(private val ctx: CarContext) : Screen(ctx) {
 
             }
             invalidate()
+        }
+
+        override fun appendLogRes(resId: Int, vararg args: Any) {
+            val msg = ctx.getString(resId, *args)
+            appendLog(msg)
         }
     }
 

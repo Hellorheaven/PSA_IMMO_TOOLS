@@ -2,16 +2,24 @@ package com.helly.psaimmotool.modules
 
 import android.os.Handler
 import android.os.Looper
-//import com.helly.psaimmotool.utils.UiUpdater
 import com.helly.psaimmotool.utils.DiagnosticRecorder
-//import com.helly.psaimmotool.R
+import com.helly.psaimmotool.ports.StatusPort
 import java.util.concurrent.Executors
+
 
 abstract class BaseModule {
 
     private var listening = false
     private val handler = Handler(Looper.getMainLooper())
     private val executor = Executors.newSingleThreadExecutor()
+
+    // Port d'UI injecté par la couche supérieure (mobile / automotive)
+    private var statusPort: StatusPort? = null
+
+    fun withStatusPort(port: StatusPort?): BaseModule {
+        this.statusPort = port
+        return this
+    }
 
     open fun connect() {
         // À redéfinir dans les sous-classes
@@ -39,9 +47,10 @@ abstract class BaseModule {
 
     /**
      * Lance un écouteur générique simulé.
-     * Peut être utilisé par défaut dans les modules qui ne gèrent pas leur propre thread.
+     * Signature conservée: startListening(context: Context)
+     * Le multilingue est géré par la couche UI via appendLogRes().
      */
-    protected fun startListening(context: android.content.Context) {
+    protected fun startListening(@Suppress("UNUSED_PARAMETER") context: android.content.Context, resIdSimulatedFrame: Int ) {
         if (listening) return
         listening = true
         executor.execute {
@@ -50,8 +59,8 @@ abstract class BaseModule {
                     Thread.sleep(3000)
                     val fakeFrame = "Simulated CAN Frame ID:672 DATA:0A FF"
                     handler.post {
-                        val log = context.getString(R.string.simulated_frame_received, fakeFrame)
-                        statusPort?.appendLog(log)
+                        // → La traduction/formatage se fait dans l'implémentation de StatusPort
+                        statusPort?.appendLogRes(resIdSimulatedFrame, fakeFrame)
                         DiagnosticRecorder.addRawFrame(fakeFrame)
                     }
                 } catch (e: InterruptedException) {
@@ -61,19 +70,17 @@ abstract class BaseModule {
             }
         }
     }
-    private var statusPort: com.helly.psaimmotool.ports.StatusPort? = null
 
-    fun withStatusPort(port: com.helly.psaimmotool.ports.StatusPort?): BaseModule {
-        this.statusPort = port
-        return this
-    }
-
+    /** Aide : log brut (sans ressource) */
     protected fun report(line: String) {
-        try {
-            statusPort?.appendOutput(line)
-        } catch (_: Throwable) {}
         try { statusPort?.appendLog(line) } catch (_: Throwable) {}
     }
+
+    /** Aide : log via ressource (multilingue) */
+    protected fun reportRes(resId: Int, vararg args: Any) {
+        try { statusPort?.appendLogRes(resId, *args) } catch (_: Throwable) {}
+    }
+
     /**
      * Arrête l'écoute du thread générique.
      */

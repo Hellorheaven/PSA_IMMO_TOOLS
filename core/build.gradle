@@ -5,6 +5,7 @@ plugins {
 
 android {
     namespace 'com.helly.psaimmotool.core'
+    
     compileSdk 36
 
     defaultConfig {

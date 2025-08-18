@@ -219,6 +219,10 @@
     <string name="select_model">Select a model</string>
     <string name="select_year">Select a year</string>
     <string name="vehicle_selected">%1$s %2$s %3$d selected</string>
+    <string name="usb_can_connected">✅ Simulated USB CAN connected</string>
+    <string name="usb_can_disconnected">🛑 Simulated USB CAN disconnected</string>
+    <string name="usb_can_send">🧪 [Simulated CAN] Sending: %1$s</string>
+    <string name="usb_can_listen_started">👂 Simulated CAN listening started</string>
 
 
 </resources>
