@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.helly.psaimmotool.core'
-    
+
     compileSdk 36
 
     defaultConfig {
@@ -28,6 +28,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.16.0'
+    implementation 'androidx.core:core-ktx:1.17.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
 }
