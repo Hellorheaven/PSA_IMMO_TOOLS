@@ -1,11 +1,11 @@
+// core/modules/BaseModule.kt
 package com.helly.psaimmotool.modules
 
 import android.os.Handler
 import android.os.Looper
+import com.helly.psaimmotool.protocol.Reporter
 import com.helly.psaimmotool.utils.DiagnosticRecorder
-import com.helly.psaimmotool.ports.StatusPort
 import java.util.concurrent.Executors
-
 
 abstract class BaseModule {
 
@@ -13,44 +13,24 @@ abstract class BaseModule {
     private val handler = Handler(Looper.getMainLooper())
     private val executor = Executors.newSingleThreadExecutor()
 
-    // Port d'UI injecté par la couche supérieure (mobile / automotive)
-    private var statusPort: StatusPort? = null
+    // Reporter injecté par la couche supérieure (mobile / automotive)
+    protected var reporter: Reporter? = null
 
-    fun withStatusPort(port: StatusPort?): BaseModule {
-        this.statusPort = port
+    fun withReporter(port: Reporter?): BaseModule {
+        this.reporter = port
         return this
     }
 
-    open fun connect() {
-        // À redéfinir dans les sous-classes
-    }
+    open fun connect() {}
+    open fun disconnect() {}
+    open fun requestVin() {}
+    open fun requestPin() {}
+    open fun readDtc() {}
+    open fun startCanListening() {}
+    open fun sendCustomFrame(frame: String) {}
 
-    open fun requestVin() {
-        // À redéfinir si supporté
-    }
-
-    open fun requestPin() {
-        // À redéfinir si supporté
-    }
-
-    open fun startCanListening() {
-        // À redéfinir si supporté
-    }
-
-    open fun sendCustomFrame(frame: String) {
-        // À redéfinir pour gérer l'envoi
-    }
-
-    open fun readDtc() {
-        // À redéfinir pour lire les DTC
-    }
-
-    /**
-     * Lance un écouteur générique simulé.
-     * Signature conservée: startListening(context: Context)
-     * Le multilingue est géré par la couche UI via appendLogRes().
-     */
-    protected fun startListening(@Suppress("UNUSED_PARAMETER") context: android.content.Context, resIdSimulatedFrame: Int ) {
+    /** Lance un écouteur générique simulé. */
+    protected fun startListening(resIdSimulatedFrame: Int) {
         if (listening) return
         listening = true
         executor.execute {
@@ -59,8 +39,7 @@ abstract class BaseModule {
                     Thread.sleep(3000)
                     val fakeFrame = "Simulated CAN Frame ID:672 DATA:0A FF"
                     handler.post {
-                        // → La traduction/formatage se fait dans l'implémentation de StatusPort
-                        statusPort?.appendLogRes(resIdSimulatedFrame, fakeFrame)
+                        reporter?.logRes(resIdSimulatedFrame, fakeFrame)
                         DiagnosticRecorder.addRawFrame(fakeFrame)
                     }
                 } catch (e: InterruptedException) {
@@ -71,24 +50,13 @@ abstract class BaseModule {
         }
     }
 
-    /** Aide : log brut (sans ressource) */
+    /** Helpers */
     protected fun report(line: String) {
-        try { statusPort?.appendLog(line) } catch (_: Throwable) {}
+        reporter?.log(line)
     }
-
-    /** Aide : log via ressource (multilingue) */
     protected fun reportRes(resId: Int, vararg args: Any) {
-        try { statusPort?.appendLogRes(resId, *args) } catch (_: Throwable) {}
+        reporter?.logRes(resId, *args)
     }
 
-    /**
-     * Arrête l'écoute du thread générique.
-     */
-    open fun stopListening() {
-        listening = false
-    }
-
-    open fun disconnect() {
-        // Peut être surchargé par les modules
-    }
+    open fun stopListening() { listening = false }
 }

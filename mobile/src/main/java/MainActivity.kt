@@ -6,44 +6,23 @@ import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import com.helly.psaimmotool.modules.BaseModule
-import com.helly.psaimmotool.modules.CanBusModule
-import com.helly.psaimmotool.modules.CanBusUartModule
-import com.helly.psaimmotool.modules.GenericCanDemoModule
-import com.helly.psaimmotool.modules.KLineUsbModule
-import com.helly.psaimmotool.modules.Obd2BluetoothModule
-import com.helly.psaimmotool.modules.Obd2UsbModule
-import com.helly.psaimmotool.utils.ContextProvider
-import com.helly.psaimmotool.utils.LogExporter
-import com.helly.psaimmotool.utils.PermissionUtils
-import com.helly.psaimmotool.utils.ReportGenerator
-import com.helly.psaimmotool.utils.UiUpdater
-import com.helly.psaimmotool.utils.VehicleCapabilities
-import com.helly.psaimmotool.utils.VehicleManager
+import com.helly.psaimmotool.modules.*
+import com.helly.psaimmotool.ports.StatusPort
+import com.helly.psaimmotool.utils.*
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
-
-
 
     private lateinit var connectButton: Button
     private lateinit var requestVinButton: Button
@@ -66,6 +45,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btNamesAdapter: ArrayAdapter<String>
     private var btDialog: AlertDialog? = null
     private var isModuleConnected = false
+
+    // Implémentation mobile du StatusPort
+    private lateinit var statusPort: StatusPort
 
     private val bluetoothReceiver = object : BroadcastReceiver() {
         @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
@@ -105,8 +87,12 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
         setupButtons()
 
+        // Initialisation du UiUpdater (pour l’affichage direct mobile)
         UiUpdater.init(statusText, outputText)
         ContextProvider.init(applicationContext)
+
+        // Création d’un StatusPort mobile basé sur UiUpdater
+        statusPort = StatusPortImpl()
 
         registerReceiver(bluetoothReceiver, IntentFilter().apply {
             addAction(BluetoothDevice.ACTION_FOUND)
@@ -211,6 +197,7 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
     }
+
     private fun showModuleSelectionDialog() {
         val modules = VehicleCapabilities.getCompatibleModules()
         if (modules.isEmpty()) return
@@ -251,7 +238,7 @@ class MainActivity : AppCompatActivity() {
         listView.setOnItemClickListener { _, _, position, _ ->
             val device = bluetoothDevices[position]
             btDialog?.dismiss()
-            currentModule = Obd2BluetoothModule(this, device)
+            currentModule = Obd2BluetoothModule(this, device).withStatusPort(statusPort)
             updateUiVisibilityForModule()
         }
 
@@ -263,24 +250,6 @@ class MainActivity : AppCompatActivity() {
 
         bluetoothAdapter?.startDiscovery()
     }
-
-//    private fun showVehicleSelectionDialog() {
-//        val vehicules = listOf(
-//            Triple("Peugeot", "207", 2008),
-//            Triple("MG", "4", 2023),
-//            Triple("Ford", "Mustang Mach-E", 2021)
-//        )
-//        val labels = vehicules.map { "${it.first} ${it.second} ${it.third}" }.toTypedArray()
-//
-//        AlertDialog.Builder(this)
-//            .setTitle(R.string.select_vehicle)
-//            .setItems(labels) { _, which ->
-//                val v = vehicules[which]
-//                VehicleManager.setVehicle(v.first, v.second, v.third)
-//                updateUiVisibilityForModule()
-//            }
-//            .show()
-//    }
 
     private fun updateUiVisibilityForModule() {
         val isCanModule = currentModuleName.contains("CANBUS", true)
@@ -312,7 +281,7 @@ class MainActivity : AppCompatActivity() {
         startCanListenButton.setOnClickListener { currentModule?.startCanListening() }
         sendFrameButton.setOnClickListener {
             val frame = inputFrameText.text.toString()
-            UiUpdater.appendLog("\u2B06\uFE0F $frame")
+            statusPort.appendLog("➡️ $frame")
             currentModule?.sendCustomFrame(frame)
         }
         exportLogsButton.setOnClickListener {
@@ -335,7 +304,7 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.module_canbus_uart) -> CanBusUartModule(this)
             getString(R.string.module_can_demo) -> GenericCanDemoModule(this)
             else -> null
-        }
+        }?.withStatusPort(statusPort)  // injection du port
     }
 
     private fun bindViews() {
@@ -351,12 +320,12 @@ class MainActivity : AppCompatActivity() {
         statusText = findViewById(R.id.statusText)
         outputText = findViewById(R.id.outputText)
     }
-    
+
     private fun initToolbar() {
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.mainToolbar)
         setSupportActionBar(toolbar)
     }
-    
+
     companion object {
         const val REQ_BT_PERMS = 1001
     }
