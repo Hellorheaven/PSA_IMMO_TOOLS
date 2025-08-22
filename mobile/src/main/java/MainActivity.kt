@@ -18,6 +18,7 @@ import androidx.core.view.isVisible
 import com.helly.psaimmotool.modules.VehicleModule
 import com.helly.psaimmotool.ports.StatusPort
 import com.helly.psaimmotool.utils.*
+import com.helly.psaimmotool.ports.*
 import com.helly.psaimmotool.protocol.*
 import com.helly.psaimmotool.transport.*
 import com.helly.psaimmotool.mobile.StatusReporter
@@ -90,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         UiUpdater.init(statusText, outputText)
         ContextProvider.init(applicationContext)
 
-        statusPort = StatusPortImpl()
+        statusPort = StatusPortImpl(  this)
 
         registerReceiver(bluetoothReceiver, IntentFilter().apply {
             addAction(BluetoothDevice.ACTION_FOUND)
@@ -319,6 +320,11 @@ class MainActivity : AppCompatActivity() {
             }
             getString(R.string.module_canbus_uart) -> {
                 val transport = UartTransport()
+                val protocol = CanProtocol(transport).withReporter(reporter)
+                VehicleModule(protocol)
+            }
+            getString(R.string.module_can_demo) -> {
+                val transport = DemoTransport()
                 val protocol = CanProtocol(transport).withReporter(reporter)
                 VehicleModule(protocol)
             }

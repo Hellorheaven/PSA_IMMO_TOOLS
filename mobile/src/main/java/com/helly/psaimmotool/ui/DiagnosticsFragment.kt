@@ -16,6 +16,8 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.helly.psaimmotool.*
 import com.helly.psaimmotool.modules.*
+import com.helly.psaimmotool.protocol.*
+import com.helly.psaimmotool.transport.*
 import com.helly.psaimmotool.utils.*
 import java.io.File
 import java.io.FileOutputStream
@@ -39,7 +41,7 @@ class DiagnosticsFragment : Fragment() {
     private lateinit var outputText: TextView
     private lateinit var mainScroll: NestedScrollView
 
-    private var currentModule: BaseModule? = null
+    private var currentModule: VehicleModule? = null
     private var currentModuleName: String = ""
     private var isConnected = false
 
@@ -68,10 +70,10 @@ class DiagnosticsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ContextProvider.init(requireContext().applicationContext)
-        setupButtons()
         DiagnosticRecorder.clear()
         UiUpdater.init(statusText, outputText)
         updateVehicleInfoDisplay()
+
         requireContext().registerReceiver(bluetoothReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             ActivityCompat.requestPermissions(
@@ -83,13 +85,11 @@ class DiagnosticsFragment : Fragment() {
                 REQ_BT_PERMS
             )
         }
-
         val filter = IntentFilter().apply {
             addAction(BluetoothDevice.ACTION_FOUND)
             addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -97,7 +97,6 @@ class DiagnosticsFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // Layout spécifique du fragment (copie de ton contenu immuable, sans toolbar)
         return inflater.inflate(R.layout.fragment_diagnostics, container, false)
     }
 
@@ -119,7 +118,6 @@ class DiagnosticsFragment : Fragment() {
         UiUpdater.init(statusText, outputText)
         updateVehicleInfoDisplay()
 
-        // Auto-scroll selon Pref
         val prefs = requireContext().getSharedPreferences(Prefs.FILE, Context.MODE_PRIVATE)
         val autoScroll = prefs.getBoolean(Prefs.KEY_AUTOSCROLL, true)
         if (autoScroll) {
@@ -145,20 +143,23 @@ class DiagnosticsFragment : Fragment() {
             if (selected.isBlank()) return@setOnClickListener
 
             isConnected = false
-            currentModule = when (selected) {
-                getString(R.string.module_obd2_usb) -> Obd2UsbModule(requireContext())
+            val protocol: Protocol? = when (selected) {
+                getString(R.string.module_obd2_usb) -> Obd2Protocol(UsbTransport(requireContext()))
                 getString(R.string.module_obd2_bluetooth) -> {
                     val device = bluetoothDevices.getOrNull(bluetoothDeviceSpinner.selectedItemPosition)
-                    Obd2BluetoothModule(requireContext(), device)
+                    device?.let { Obd2Protocol(BluetoothTransport(requireContext(), it)) }
                 }
-                getString(R.string.module_kline_usb) -> KLineUsbModule(requireContext())
-                getString(R.string.module_canbus) -> CanBusModule(requireContext())
-                getString(R.string.module_canbus_uart) -> CanBusUartModule(requireContext())
-                getString(R.string.module_can_demo) -> GenericCanDemoModule(requireContext())
+                getString(R.string.module_kline_usb) -> KLineProtocol(UsbTransport(requireContext()))
+                getString(R.string.module_canbus) -> CanProtocol(UsbTransport(requireContext()))
+                getString(R.string.module_canbus_uart) -> CanProtocol(UartTransport(requireContext()))
+                getString(R.string.module_can_demo) -> CanProtocol(DemoTransport())
                 else -> null
-            }
+            }?.withReporter(UiReporter())
+
+            currentModule = protocol?.let { VehicleModule(it) }
+
             currentModule?.connect()
-            isConnected = true
+            isConnected = currentModule != null
         }
 
         requestVinButton.setOnClickListener { currentModule?.requestVin() }
@@ -175,7 +176,7 @@ class DiagnosticsFragment : Fragment() {
 
         sendFrameButton.setOnClickListener {
             val frame = inputFrameText.text.toString()
-            UiUpdater.appendLog("\u2B06\uFE0F $frame")
+            UiUpdater.appendLog("➡️ $frame")
             currentModule?.sendCustomFrame(frame)
         }
 
@@ -243,8 +244,6 @@ class DiagnosticsFragment : Fragment() {
         bluetoothAdapter?.startDiscovery()
         Toast.makeText(requireContext(), getString(R.string.bluetooth_scanning), Toast.LENGTH_SHORT).show()
     }
-
-
 
     private fun updateVehicleInfoDisplay() {
         val (brand, model, year) = VehicleManager.selectedVehicle
