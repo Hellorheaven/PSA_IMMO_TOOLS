@@ -41,6 +41,7 @@ class DiagnosticsFragment : Fragment() {
     private lateinit var outputText: TextView
     private lateinit var mainScroll: NestedScrollView
 
+    // NOTE: on garde le même nom de variable; seul le type change vers VehicleModule
     private var currentModule: VehicleModule? = null
     private var currentModuleName: String = ""
     private var isConnected = false
@@ -71,9 +72,6 @@ class DiagnosticsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         ContextProvider.init(requireContext().applicationContext)
         DiagnosticRecorder.clear()
-        UiUpdater.init(statusText, outputText)
-        updateVehicleInfoDisplay()
-
         requireContext().registerReceiver(bluetoothReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             ActivityCompat.requestPermissions(
@@ -115,9 +113,11 @@ class DiagnosticsFragment : Fragment() {
         outputText = view.findViewById(R.id.outputText)
         mainScroll = view.findViewById(R.id.mainScroll)
 
+        // Initialise l’UI (après le bind des vues)
         UiUpdater.init(statusText, outputText)
         updateVehicleInfoDisplay()
 
+        // Auto-scroll selon Pref
         val prefs = requireContext().getSharedPreferences(Prefs.FILE, Context.MODE_PRIVATE)
         val autoScroll = prefs.getBoolean(Prefs.KEY_AUTOSCROLL, true)
         if (autoScroll) {
@@ -142,22 +142,21 @@ class DiagnosticsFragment : Fragment() {
             val selected = currentModuleName
             if (selected.isBlank()) return@setOnClickListener
 
-            isConnected = false
-            val protocol: Protocol? = when (selected) {
-                getString(R.string.module_obd2_usb) -> Obd2Protocol(UsbTransport(requireContext()))
-                getString(R.string.module_obd2_bluetooth) -> {
-                    val device = bluetoothDevices.getOrNull(bluetoothDeviceSpinner.selectedItemPosition)
-                    device?.let { Obd2Protocol(BluetoothTransport(requireContext(), it)) }
-                }
-                getString(R.string.module_kline_usb) -> KLineProtocol(UsbTransport(requireContext()))
-                getString(R.string.module_canbus) -> CanProtocol(UsbTransport(requireContext()))
-                getString(R.string.module_canbus_uart) -> CanProtocol(UartTransport(requireContext()))
-                getString(R.string.module_can_demo) -> CanProtocol(DemoTransport())
+            // Reporter (colle UI simple via UiUpdater)
+            val reporter: Reporter = UiReporter(requireContext())
+
+            // Choix transport + protocole (NE PAS passer de context aux transports)
+            val protocol: Any? = when (selected) {
+                getString(R.string.module_obd2_usb)    -> Obd2Protocol(UsbTransport()).withReporter(reporter)
+                getString(R.string.module_obd2_bluetooth) -> Obd2Protocol(BluetoothTransport()).withReporter(reporter)
+                getString(R.string.module_kline_usb)   -> KLineProtocol(UsbTransport()).withReporter(reporter)
+                getString(R.string.module_canbus)      -> CanProtocol(UsbTransport()).withReporter(reporter)
+                getString(R.string.module_canbus_uart) -> CanProtocol(UartTransport()).withReporter(reporter)
+                getString(R.string.module_can_demo)    -> CanProtocol(DemoTransport()).withReporter(reporter)
                 else -> null
-            }?.withReporter(UiReporter())
+            }
 
             currentModule = protocol?.let { VehicleModule(it) }
-
             currentModule?.connect()
             isConnected = currentModule != null
         }
@@ -176,7 +175,7 @@ class DiagnosticsFragment : Fragment() {
 
         sendFrameButton.setOnClickListener {
             val frame = inputFrameText.text.toString()
-            UiUpdater.appendLog("➡️ $frame")
+            UiUpdater.appendLog("\u2B06\uFE0F $frame")
             currentModule?.sendCustomFrame(frame)
         }
 
@@ -320,6 +319,7 @@ class DiagnosticsFragment : Fragment() {
             UiUpdater.appendLog(outputText, getString(R.string.report_error, e.message ?: ""))
         }
     }
+
     companion object {
         const val ACTION_USB_PERMISSION = "com.helly.psaimmotool.USB_PERMISSION"
         const val REQ_BT_PERMS = 1001
