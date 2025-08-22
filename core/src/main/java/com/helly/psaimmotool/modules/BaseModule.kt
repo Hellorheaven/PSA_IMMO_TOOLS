@@ -1,4 +1,3 @@
-// core/modules/BaseModule.kt
 package com.helly.psaimmotool.modules
 
 import android.os.Handler
@@ -7,6 +6,13 @@ import com.helly.psaimmotool.protocol.Reporter
 import com.helly.psaimmotool.utils.DiagnosticRecorder
 import java.util.concurrent.Executors
 
+/**
+ * Classe de base pour tous les modules (CAN, K-Line, OBD2…).
+ * Ne contient aucune logique matérielle → chaque module doit
+ * implémenter connect(), sendCustomFrame(), etc.
+ *
+ * Tous les logs / statuts passent par [reporter] (StatusReporter).
+ */
 abstract class BaseModule {
 
     private var listening = false
@@ -21,6 +27,7 @@ abstract class BaseModule {
         return this
     }
 
+    /** À surcharger par les sous-classes */
     open fun connect() {}
     open fun disconnect() {}
     open fun requestVin() {}
@@ -29,7 +36,10 @@ abstract class BaseModule {
     open fun startCanListening() {}
     open fun sendCustomFrame(frame: String) {}
 
-    /** Lance un écouteur générique simulé. */
+    /**
+     * Lance un écouteur générique simulé.
+     * Le multilingue est géré par logRes(resId, args).
+     */
     protected fun startListening(resIdSimulatedFrame: Int) {
         if (listening) return
         listening = true
@@ -50,12 +60,17 @@ abstract class BaseModule {
         }
     }
 
-    /** Helpers */
+    /** Helpers de logging */
     protected fun report(line: String) {
         reporter?.log(line)
     }
     protected fun reportRes(resId: Int, vararg args: Any) {
         reporter?.logRes(resId, *args)
+    }
+
+    /** Helper de statut (connecté/déconnecté) */
+    protected fun reportStatus(text: String, module: String) {
+        reporter?.setStatus(text, module)
     }
 
     open fun stopListening() { listening = false }

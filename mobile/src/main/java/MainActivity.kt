@@ -10,16 +10,17 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.*
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import com.helly.psaimmotool.modules.*
+import com.helly.psaimmotool.modules.VehicleModule
 import com.helly.psaimmotool.ports.StatusPort
 import com.helly.psaimmotool.utils.*
+import com.helly.psaimmotool.protocol.*
+import com.helly.psaimmotool.transport.*
+import com.helly.psaimmotool.mobile.StatusReporter
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var statusText: TextView
     private lateinit var outputText: TextView
 
-    private var currentModule: BaseModule? = null
+    private var currentModule: VehicleModule? = null
     private var currentModuleName: String = ""
 
     private lateinit var bluetoothManager: BluetoothManager
@@ -78,7 +79,6 @@ class MainActivity : AppCompatActivity() {
         bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
 
-        // On demande les permissions et on attend leur retour via onRequestPermissionsResult
         checkAndRequestAllPermissions(this)
     }
 
@@ -87,11 +87,9 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
         setupButtons()
 
-        // Initialisation du UiUpdater (pour l’affichage direct mobile)
         UiUpdater.init(statusText, outputText)
         ContextProvider.init(applicationContext)
 
-        // Création d’un StatusPort mobile basé sur UiUpdater
         statusPort = StatusPortImpl()
 
         registerReceiver(bluetoothReceiver, IntentFilter().apply {
@@ -151,12 +149,12 @@ class MainActivity : AppCompatActivity() {
         unregisterReceiver(bluetoothReceiver)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: android.view.Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_select_vehicle -> { showBrandSelectionDialog(); true }
             R.id.menu_select_module -> { showModuleSelectionDialog(); true }
@@ -238,7 +236,12 @@ class MainActivity : AppCompatActivity() {
         listView.setOnItemClickListener { _, _, position, _ ->
             val device = bluetoothDevices[position]
             btDialog?.dismiss()
-            currentModule = Obd2BluetoothModule(this, device).withStatusPort(statusPort)
+
+            val reporter = StatusReporter(this, statusPort)
+            val transport = BluetoothTransport()
+            val protocol = Obd2Protocol(transport).withReporter(reporter)
+            currentModule = VehicleModule(protocol)
+
             updateUiVisibilityForModule()
         }
 
@@ -296,15 +299,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun buildModuleForName(name: String) {
+        val reporter = StatusReporter(this, statusPort)
+
         currentModule = when (name) {
-            getString(R.string.module_obd2_usb) -> Obd2UsbModule(this)
-            getString(R.string.module_obd2_bluetooth) -> null
-            getString(R.string.module_kline_usb) -> KLineUsbModule(this)
-            getString(R.string.module_canbus) -> CanBusModule(this)
-            getString(R.string.module_canbus_uart) -> CanBusUartModule(this)
-            getString(R.string.module_can_demo) -> GenericCanDemoModule(this)
+            getString(R.string.module_obd2_usb) -> {
+                val transport = UsbTransport()
+                val protocol = Obd2Protocol(transport).withReporter(reporter)
+                VehicleModule(protocol)
+            }
+            getString(R.string.module_kline_usb) -> {
+                val transport = UsbTransport()
+                val protocol = KLineProtocol(transport).withReporter(reporter)
+                VehicleModule(protocol)
+            }
+            getString(R.string.module_canbus) -> {
+                val transport = UsbTransport()
+                val protocol = CanProtocol(transport).withReporter(reporter)
+                VehicleModule(protocol)
+            }
+            getString(R.string.module_canbus_uart) -> {
+                val transport = UartTransport()
+                val protocol = CanProtocol(transport).withReporter(reporter)
+                VehicleModule(protocol)
+            }
             else -> null
-        }?.withStatusPort(statusPort)  // injection du port
+        }
     }
 
     private fun bindViews() {

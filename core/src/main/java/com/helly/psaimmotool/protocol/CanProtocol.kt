@@ -1,4 +1,3 @@
-// core/protocol/CanProtocol.kt
 package com.helly.psaimmotool.protocol
 
 import com.helly.psaimmotool.can.CanFrame
@@ -6,29 +5,29 @@ import com.helly.psaimmotool.utils.DiagnosticRecorder
 import com.helly.psaimmotool.utils.FrameInterpreter
 import com.helly.psaimmotool.modules.PsaKeyCalculator
 
-class CanProtocol(private val transport: TransportInterface) {
+class CanProtocol(private val transport: TransportInterface) : Protocol {
 
     private var reporter: Reporter? = null
     private var awaitingSeed = false
     private var awaitingPin = false
 
-    fun withReporter(r: Reporter?): CanProtocol {
+    override fun withReporter(r: Reporter?): Protocol {
         this.reporter = r
         return this
     }
 
-    fun connect() {
+    override fun connect() {
         transport.connect()
         reporter?.setStatus("Connecté au CAN", "CAN")
         DiagnosticRecorder.setConnectionStatus(true)
     }
 
-    fun disconnect() {
+    override fun disconnect() {
         transport.disconnect()
         reporter?.setStatus("Déconnecté", "")
     }
 
-    fun sendFrame(frame: String) {
+    override fun sendFrame(frame: String) {
         reporter?.log("➡️ $frame")
         DiagnosticRecorder.addRawFrame(frame)
 
@@ -44,17 +43,33 @@ class CanProtocol(private val transport: TransportInterface) {
             }
         }
     }
-    fun requestVin() {
+
+    override fun requestVin() {
         sendFrame("7DF 02 01 02")
     }
 
-    fun requestPin() {
+    override fun requestPin() {
         awaitingSeed = true
         sendFrame("7E0 02 27 01")
     }
-    fun requestDtc() {
+
+    override fun requestDtc() {
         sendFrame("7DF 02 03 00")
     }
+
+    override fun startListening() {
+        transport.startListening { frame ->
+            reporter?.log("📡 ${frame.toString()}")
+            DiagnosticRecorder.addRawFrame(frame.toString())
+
+            val decoded = FrameInterpreter.decode(frame)
+            if (decoded.isNotBlank()) {
+                reporter?.log("✅ $decoded")
+                DiagnosticRecorder.addDecodedFrame(decoded)
+            }
+        }
+    }
+
     private fun handlePinSequenceResponse(frame: CanFrame) {
         val data = frame.data
         if (data.isEmpty()) return

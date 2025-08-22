@@ -1,4 +1,4 @@
-package com.helly.psaimmotool.com.helly.psaimmotool.mobile
+package com.helly.psaimmotool.mobile
 
 import android.content.Context
 import com.helly.psaimmotool.protocol.Reporter
@@ -22,3 +22,8 @@ class StatusReporter(
         port.setConnectedStatus(text, module)
     }
 }
+
+
+
+
+

@@ -53,8 +53,7 @@ class MainScreen(private val ctx: CarContext) : Screen(ctx) {
     }
 
     // TODO: instancier ici votre module existant (sans renommer quoi que ce soit) et lui injecter le port :
-    // private val engine = CanBusUartModule(ctx).withStatusPort(carStatusPort)
-    // ou bien : private val engine = Obd2UsbModule(ctx).withStatusPort(carStatusPort)
+
     // Pour que ce fichier compile sans dépendances, on laisse un "engine" factice :
     private val engine = object {
         fun connect() { carStatusPort.appendLog("Connexion (stub)") }
