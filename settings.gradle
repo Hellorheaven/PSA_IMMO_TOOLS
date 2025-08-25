@@ -1,5 +1,5 @@
 rootProject.name = 'psa_immo_usb_tool_project'
-include ':mobile',':core', ':automotive'
+include ':mobile',':core', ':automotive',':strings'
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -10,4 +10,3 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-

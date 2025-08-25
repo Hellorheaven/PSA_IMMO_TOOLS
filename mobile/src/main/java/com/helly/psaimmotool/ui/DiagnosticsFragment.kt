@@ -146,7 +146,7 @@ class DiagnosticsFragment : Fragment() {
             val reporter: Reporter = UiReporter(requireContext())
 
             // Choix transport + protocole (NE PAS passer de context aux transports)
-            val protocol: Any? = when (selected) {
+            val protocol = when (selected) {
                 getString(R.string.module_obd2_usb)    -> Obd2Protocol(UsbTransport()).withReporter(reporter)
                 getString(R.string.module_obd2_bluetooth) -> Obd2Protocol(BluetoothTransport()).withReporter(reporter)
                 getString(R.string.module_kline_usb)   -> KLineProtocol(UsbTransport()).withReporter(reporter)
@@ -159,6 +159,7 @@ class DiagnosticsFragment : Fragment() {
             currentModule = protocol?.let { VehicleModule(it) }
             currentModule?.connect()
             isConnected = currentModule != null
+
         }
 
         requestVinButton.setOnClickListener { currentModule?.requestVin() }

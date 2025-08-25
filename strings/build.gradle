@@ -1,20 +1,15 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    namespace 'com.helly.psaimmotool.core'
-
+    namespace 'com.helly.psaimmotool.strings'
     compileSdk 36
 
     defaultConfig {
         minSdk 21
         targetSdk 36
-    }
-
-    buildFeatures {
-        viewBinding true
     }
 
     compileOptions {
@@ -28,7 +23,5 @@ android {
 }
 
 dependencies {
-    implementation project(":strings")
-    implementation 'androidx.core:core-ktx:1.17.0'
-    implementation 'androidx.appcompat:appcompat:1.7.1'
+    // Pas de dépendance Android obligatoire
 }

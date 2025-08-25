@@ -1,11 +1,13 @@
 package com.helly.psaimmotool.utils
-import com.helly.psaimmotool.R
 
 object VehicleManager {
     var selectedVehicle: Triple<String, String, Int> = Triple("Peugeot", "207", 2008)
 
+    // Callback optionnel pour notifier l’UI
+    var onVehicleChanged: ((Triple<String, String, Int>) -> Unit)? = null
+
     fun setVehicle(marque: String, modele: String, annee: Int) {
         selectedVehicle = Triple(marque, modele, annee)
-        UiUpdater.appendLog("\uD83D\uDE97 ${ContextProvider.getString(R.string.report_vehicle)} : $marque $modele $annee")
+        onVehicleChanged?.invoke(selectedVehicle)
     }
 }
