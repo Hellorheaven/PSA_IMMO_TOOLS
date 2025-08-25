@@ -295,6 +295,13 @@ class MainActivity : AppCompatActivity() {
             UiUpdater.clearLog(this)
         }
         generateReportButton.setOnClickListener {
+            // Feedback immédiat
+            Toast.makeText(this, getString(R.string.requesting_vin_dtc), Toast.LENGTH_SHORT).show()
+
+
+            // On envoie d'abord les requêtes VIN et DTC
+            currentModule?.requestVin()
+            currentModule?.requestDtc()
             ReportGenerator.generate(this, currentModuleName, outputText.text.toString())
         }
     }

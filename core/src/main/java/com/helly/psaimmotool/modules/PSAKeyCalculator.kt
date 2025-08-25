@@ -1,7 +1,6 @@
 package com.helly.psaimmotool.modules
 
 import android.content.Context
-import com.helly.psaimmotool.R
 import com.helly.psaimmotool.utils.*
 
 object PsaKeyCalculator {
@@ -52,7 +51,7 @@ object PsaKeyCalculator {
         return seedKeyDatabase.containsKey(vehicle)
     }
 
-    fun calculateKey(context: Context, seed: ByteArray): ByteArray {
+    fun calculateKey(seed: ByteArray): ByteArray {
         fun transform(data: Int, sec: IntArray): Int {
             var d = data
             if (d > 32767) d = -(32768 - (d % 32768))
@@ -67,7 +66,10 @@ object PsaKeyCalculator {
         val params = seedKeyDatabase[vehicle]
 
         if (params == null) {
-            UiUpdater.appendLog(context.getString(R.string.pin_step_no_key_algo))
+            lastCalculation = Pair(
+                seed.joinToString(" ") { "%02X".format(it) },
+                "NO_KEY_ALGO"
+            )
             return byteArrayOf(0x00, 0x00)
         }
 

@@ -228,7 +228,7 @@
     <string name="usb_can_disconnected">🛑 USB CAN simulé déconnecté</string>
     <string name="usb_can_send">🧪 [CAN Simulé] Envoi : %1$s</string>
     <string name="usb_can_listen_started">👂 Écoute CAN simulée démarrée</string>
-
+    <string name="requesting_vin_dtc">Requête VIN &amp; DTC envoyées…</string>
 </resources>
 
 

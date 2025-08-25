@@ -223,6 +223,7 @@
     <string name="usb_can_disconnected">🛑 Simulated USB CAN disconnected</string>
     <string name="usb_can_send">🧪 [Simulated CAN] Sending: %1$s</string>
     <string name="usb_can_listen_started">👂 Simulated CAN listening started</string>
+    <string name="requesting_vin_dtc">Request VIN and DTC send…</string>
 
 
 </resources>
